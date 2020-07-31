@@ -1,0 +1,4033 @@
+% uWaterloo Thesis Template for LaTeX 
+% Last Updated June 14, 2017 by Stephen Carr, IST Client Services
+% FOR ASSISTANCE, please send mail to rt-IST-CSmathsci@ist.uwaterloo.ca
+
+% Effective October 2006, the University of Waterloo 
+% requires electronic thesis submission. See the uWaterloo thesis regulations at
+% https://uwaterloo.ca/graduate-studies/thesis.
+
+% DON'T FORGET TO ADD YOUR OWN NAME AND TITLE in the "hyperref" package
+% configuration below. THIS INFORMATION GETS EMBEDDED IN THE PDF FINAL PDF DOCUMENT.
+% You can view the information if you view Properties of the PDF document.
+
+% Many faculties/departments also require one or more printed
+% copies. This template attempts to satisfy both types of output. 
+% It is based on the standard "book" document class which provides all necessary 
+% sectioning structures and allows multi-part theses.
+
+% DISCLAIMER
+% To the best of our knowledge, this template satisfies the current uWaterloo requirements.
+% However, it is your responsibility to assure that you have met all 
+% requirements of the University and your particular department.
+% Many thanks for the feedback from many graduates that assisted the development of this template.
+
+% -----------------------------------------------------------------------
+
+% By default, output is produced that is geared toward generating a PDF 
+% version optimized for viewing on an electronic display, including 
+% hyperlinks within the PDF.
+ 
+% E.g. to process a thesis called "mythesis.tex" based on this template, run:
+
+% pdflatex mythesis	-- first pass of the pdflatex processor
+% bibtex mythesis	-- generates bibliography from .bib data file(s)
+% makeindex         -- should be run only if an index is used 
+% pdflatex mythesis	-- fixes numbering in cross-references, bibliographic references, glossaries, index, etc.
+% pdflatex mythesis	-- fixes numbering in cross-references, bibliographic references, glossaries, index, etc.
+
+% If you use the recommended LaTeX editor, Texmaker, you would open the mythesis.tex
+% file, then click the PDFLaTeX button. Then run BibTeX (under the Tools menu).
+% Then click the PDFLaTeX button two more times. If you have an index as well,
+% you'll need to run MakeIndex from the Tools menu as well, before running pdflatex
+% the last two times.
+
+% N.B. The "pdftex" program allows graphics in the following formats to be
+% included with the "\includegraphics" command: PNG, PDF, JPEG, TIFF
+% Tip 1: Generate your figures and photos in the size you want them to appear
+% in your thesis, rather than scaling them with \includegraphics options.
+% Tip 2: Any drawings you do should be in scalable vector graphic formats:
+% SVG, PNG, WMF, EPS and then converted to PNG or PDF, so they are scalable in
+% the final PDF as well.
+% Tip 3: Photographs should be cropped and compressed so as not to be too large.
+
+% To create a PDF output that is optimized for double-sided printing: 
+%
+% 1) comment-out the \documentclass statement in the preamble below, and
+% un-comment the second \documentclass line.
+%
+% 2) change the value assigned below to the boolean variable
+% "PrintVersion" from "false" to "true".
+
+% --------------------- Start of Document Preamble -----------------------
+
+% Specify the document class, default style attributes, and page dimensions
+% For hyperlinked PDF, suitable for viewing on a computer, use this:
+\documentclass[letterpaper,12pt,titlepage,oneside,final]{book}
+ 
+% For PDF, suitable for double-sided printing, change the PrintVersion variable below
+% to "true" and use this \documentclass line instead of the one above:
+%\documentclass[letterpaper,12pt,titlepage,openright,twoside,final]{book}
+
+% Some LaTeX commands I define for my own nomenclature.
+% If you have to, it's better to change nomenclature once here than in a 
+% million places throughout your thesis!
+\newcommand{\package}[1]{\textbf{#1}} % package names in bold text
+\newcommand{\cmmd}[1]{\textbackslash\texttt{#1}} % command name in tt font 
+\newcommand{\href}[1]{#1} % does nothing, but defines the command so the
+    % print-optimized version will ignore \href tags (redefined by hyperref pkg).
+%\newcommand{\texorpdfstring}[2]{#1} % does nothing, but defines the command
+% Anything defined here may be redefined by packages added below...
+
+% This package allows if-then-else control structures.
+\usepackage{ifthen}
+\newboolean{PrintVersion}
+\setboolean{PrintVersion}{false} 
+% CHANGE THIS VALUE TO "true" as necessary, to improve printed results for hard copies
+% by overriding some options of the hyperref package below.
+
+%\usepackage{nomencl} % For a nomenclature (optional; available from ctan.org)
+\usepackage{amsmath,amssymb,amstext} % Lots of math symbols and environments
+\usepackage[pdftex]{graphicx} % For including graphics N.B. pdftex graphics driver 
+%\usepackage{xcolor}
+%\usepackage{color}
+%\usepackage[table,xcdraw,svgnames]{xcolor}
+%\usepackage{natbib}  
+%\usepackage[colorlinks]{hyperref}
+
+
+
+% Hyperlinks make it very easy to navigate an electronic document.
+% In addition, this is where you should specify the thesis title
+% and author as they appear in the properties of the PDF document.
+% Use the "hyperref" package 
+% N.B. HYPERREF MUST BE THE LAST PACKAGE LOADED; ADD ADDITIONAL PKGS ABOVE
+\usepackage[pdftex,pagebackref=false]{hyperref} % with basic options
+		% N.B. pagebackref=true provides links back from the References to the body text. This can cause trouble for printing.
+\hypersetup{
+    plainpages=false,       % needed if Roman numbers in frontpages
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={uWaterloo\ LaTeX\ Thesis\ Template},    % title: CHANGE THIS TEXT!
+%    pdfauthor={Author},    % author: CHANGE THIS TEXT! and uncomment this line
+%    pdfsubject={Subject},  % subject: CHANGE THIS TEXT! and uncomment this line
+%    pdfkeywords={keyword1} {key2} {key3}, % list of keywords, and uncomment this line if desired
+    pdfnewwindow=true,      % links in new window
+    colorlinks=true,        % false: boxed links; true: colored links
+    linkcolor=red,         % color of internal links
+    citecolor=red,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\ifthenelse{\boolean{PrintVersion}}{   % for improved print quality, change some hyperref options
+\hypersetup{	% override some previously defined hyperref options
+%    colorlinks,%
+    citecolor=black,%
+    filecolor=black,%
+    linkcolor=black,%
+    urlcolor=black}
+}{} % end of ifthenelse (no else)
+\hypersetup{linktocpage}
+
+
+\usepackage[automake,toc,abbreviations]{glossaries-extra} % Exception to the rule of hyperref being the last add-on package
+% If glossaries-extra is not in your LaTeX distribution, get it from CTAN (http://ctan.org/pkg/glossaries-extra), 
+% although it's supposed to be in both the TeX Live and MikTeX distributions. There are also documentation and 
+% installation instructions there.
+
+% Setting up the page margins...
+% uWaterloo thesis requirements specify a minimum of 1 inch (72pt) margin at the
+% top, bottom, and outside page edges and a 1.125 in. (81pt) gutter
+% margin (on binding side). While this is not an issue for electronic
+% viewing, a PDF may be printed, and so we have the same page layout for
+% both printed and electronic versions, we leave the gutter margin in.
+% Set margins to minimum permitted by uWaterloo thesis regulations:
+\setlength{\marginparwidth}{0pt} % width of margin notes
+% N.B. If margin notes are used, you must adjust \textwidth, \marginparwidth
+% and \marginparsep so that the space left between the margin notes and page
+% edge is less than 15 mm (0.6 in.)
+\setlength{\marginparsep}{0pt} % width of space between body text and margin notes
+\setlength{\evensidemargin}{0.125in} % Adds 1/8 in. to binding side of all 
+% even-numbered pages when the "twoside" printing option is selected
+\setlength{\oddsidemargin}{0.125in} % Adds 1/8 in. to the left of all pages
+% when "oneside" printing is selected, and to the left of all odd-numbered
+% pages when "twoside" printing is selected
+\setlength{\textwidth}{6.375in} % assuming US letter paper (8.5 in. x 11 in.) and 
+% side margins as above
+\raggedbottom
+
+% The following statement specifies the amount of space between
+% paragraphs. Other reasonable specifications are \bigskipamount and \smallskipamount.
+\setlength{\parskip}{\medskipamount}
+
+% The following statement controls the line spacing.  The default
+% spacing corresponds to good typographic conventions and only slight
+% changes (e.g., perhaps "1.2"), if any, should be made.
+\renewcommand{\baselinestretch}{1} % this is the default line space setting
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% packages 
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage[titles]{tocloft}%----------------------------------------
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{verbatim}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% new commands and shortcuts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% script variables 
+\def\sO{\mathscr{O}}
+\def\sL{\mathscr{L}}
+\def\sLA{\mathscr{L}^{\mA}}
+\def\sLfA{\mathscr{L}^{\A}}
+\def\sA{\mathscr{A}}
+\def\scrQ{\ensuremath{\mathscr{Q}}}
+\def\rs{\mathscr{R}}
+\def\sW{\mathscr{W}}
+\def\sI{\mathscr{I}}
+% frak variables 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\fA{{\mathfrak A}}
+\def\fB{{\mathfrak B}}
+\def\fN{{\mathfrak N}}
+\def\fD{{\mathfrak D}}
+\def\fp{\mathfrak{P}}
+\def\Z{\mathfrak{Z}}
+\def\A{\mathfrak{A}}
+%\def\L{\mathfrak{L}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% bold variables 
+\def\bs{\textit{\textbf{s}}}
+\def\bz{\textit{\textbf{0}}}
+\def\Lb{\textit{\textbf{L}}}
+\def\Xb{\textit{\textbf{X}}}
+\def\Lambdab{\bm{\Lambda}}
+\def\Thetab{\bm{\Theta}}
+\def\thetab{\bm{\vartheta}}
+\def\mA{{\bm A}}
+\def\ub{{\bm u}}
+\def\lb{{\bm l}}
+\def\lxb{{\bm l_{\xb}}}
+\def\ax{\bm \alpha_{\xb}} 
+\def\xb{\textit{\textbf{x}}}
+\def\fb{\textit{\textbf{f}}}
+\def\gb{\textit{\textbf{g}}}
+\def\ab{\textit{\textbf{a}}}
+\def\pb{\textit{\textbf{p}}}
+\def\ajb{\overline{a_j}}
+\def\bjb{\overline{b_{j,l}}}
+\def\pjb{\overline{P_{j}}}
+\def\bI{\textbf{I}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% tilde variables 
+\def\jt{\widetilde{J}}
+\def\At{\widetilde{A}}
+\def\Yt{\widetilde{Y}}
+\def\dtt{\widetilde{d}}
+\def\kt{\widetilde{k}}
+\def\Dt{\widetilde{D}}
+%% \def\dt{\widetilde{d}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% greek letters  
+\def\vt{\vartheta}
+\def\d{\delta}
+\def\D{\Delta}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% declare math operator  
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\LCM}{LCM}
+\DeclareMathOperator{\J}{J}
+\DeclareMathOperator{\htt}{ht}
+\DeclareMathOperator{\sing}{sing}
+\DeclareMathOperator{\codim}{codim}
+\DeclareMathOperator{\jac}{jac}
+%\DeclareMathOperator{\exp}{exp}
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\reg}{reg}
+\DeclareMathOperator{\rk}{rank}
+\def\minors{\textrm{Minors}(F,p)}
+\def\minorsA{\textrm{Minors}(F^{\mA},p)}
+\def\minorsfA{\textrm{Minors}(F^{\A},p)}
+\DeclareMathOperator{\lag}{Lagrange}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% other math notation shortcuts  
+\def\pa{\partial}
+\newcommand{\softO}{{O^{\sim}}}
+\def\dt{s}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% sets of numbers
+\newcommand{\ZZ}{{\mathbb{Z}}}
+\def\C{\mathbb{C}}
+\def\Q{\mathbb{Q}}
+\def\R{\mathbb{R}}
+\def\K{\mathbb{K}}
+\def\pr{\mathbb{P}}
+\def\P{\mathscr{P}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% polar varieties
+% minors 
+\def\Wi{W(\pi_i,V)}
+\def\WiA{W(\pi_i,V(F^{\mA})}
+\def\I{\mathfrak{I}}
+\def\IA{\mathfrak{I}^{\mA}}
+\def\IfA{\mathfrak{I}^{\A}}
+\def\Ii{\mathfrak{I}(i,F)}
+\def\Ir{\sqrt{\mathfrak{I}}}
+\def\Iir{\sqrt{\mathfrak{I}(i,F)}}
+\def\IiAr{\sqrt{\mathfrak{I}(i,F^{\mA})}}
+\def\IAr{\sqrt{\mathfrak{I}^{\mA}}}
+\def\IfAr{\sqrt{\mathfrak{I}^{\A}}}
+\def\IifAr{\sqrt{\mathfrak{I}(\pi_i,F^{\A})}}
+\def\IifA{\mathfrak{I}(\pi_i,F^{\A})}
+\def\ji{\jac_{\xb}(F,i)}
+\def\jiA{\jac_{\xb}(F^{\mA},i)}
+\def\jifA{\jac_{\xb}(F^{\A},i)}
+%\def\W{\mathfrak{I}}
+% lagrange 
+\def\lagF{{\bm\lag}(F,i,(L_1,\hdots,L_c))}
+\def\lagFA{{\bm\lag}(F^{\mA},i,(L_1,\hdots,L_c))}
+\def\lagFfA{{\bm\lag}(F^{\A},i,(L_1,\hdots,L_c))}
+\def\Il{\mathscr{I}_{\ub}}
+\def\Iil{\mathscr{I}_{\ub}(i,F)}
+\def\IilAnu{\mathscr{I}(i,F^{\mA})}
+\def\IilA{\mathscr{I}_{\ub}(i,F^{\mA})}
+\def\IilfA{\mathscr{I}_{\ub}(i,F^{\A})}
+\def\IlfA{\mathscr{I}_{\ub}^{\A}}
+\def\IlA{\mathscr{I}_{\ub}^{\mA}}
+\def\jiA{\jac_{\xb}(F^{\mA},i)}
+\def\Wil{\mathscr{W}_{\ub}(\pi_i,V)}
+\def\WilA{\mathscr{W}_{\ub}(\pi_i,V^{\mA})}
+\def\WilfA{\mathscr{W}_{\ub}(\pi_i,V^{\fA})}
+\def\WilAnu{\mathscr{W}(\pi_i,V^{\mA})}
+\def\Wl{\mathscr{W}_{\ub}}
+\def\WlA{\mathscr{W}_{\ub}^{\mA}}
+\def\udl{\sum_{i=1}^pu_il_i}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% brackets
+\def\la{\langle}
+\def\ra{\rangle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% matrices 
+\def\bbm{\begin{bmatrix}}
+\def\ebm{\end{bmatrix}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% other shortcuts 
+\def\td{{\bf todo}}
+\def\gip{\Gamma_i^{'}}
+\def\gi{\Gamma_i}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Theorems 
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{ex}[theorem]{Example}
+\newtheorem{definition}{Definition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{question}{Question}
+%\newtheorem*{ex}{Example}
+\newtheorem{cor}[theorem]{Corollary}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% By default, each chapter will start on a recto (right-hand side)
+% page.  We also force each section of the front pages to start on 
+% a recto page by inserting \cleardoublepage commands.
+% In many cases, this will require that the verso page be
+% blank and, while it should be counted, a page number should not be
+% printed.  The following statements ensure a page number is not
+% printed on an otherwise blank verso page.
+\let\origdoublepage\cleardoublepage
+\newcommand{\clearemptydoublepage}{%
+  \clearpage{\pagestyle{empty}\origdoublepage}}
+\let\cleardoublepage\clearemptydoublepage
+
+% Define Glossary terms (This is properly done here, in the preamble. Could be \input{} from a file...)
+% Main glossary entries -- definitions of relevant terminology
+\newglossaryentry{computer}
+{
+name=computer,
+description={A programmable machine that receives input data,
+               stores and manipulates the data, and provides
+               formatted output}
+}
+
+% Nomenclature glossary entries -- New definitions, or unusual terminology
+\newglossary*{nomenclature}{Nomenclature}
+\newglossaryentry{dingledorf}
+{
+type=nomenclature,
+name=dingledorf,
+description={A person of supposed average intelligence who makes incredibly brainless misjudgments}
+}
+
+% List of Abbreviations (abbreviations type is built in to the glossaries-extra package)
+\newabbreviation{aaaaz}{AAAAZ}{American Association of Amature Astronomers and Zoologists}
+
+% List of Symbols
+\newglossary*{symbols}{List of Symbols}
+\newglossaryentry{rvec}
+{
+name={$\mathbf{v}$},
+sort={label},
+type=symbols,
+description={Random vector: a location in n-dimensional Cartesian space, where each dimensional component is determined by a random process}
+}
+ 
+\makeglossaries
+
+%======================================================================
+%   L O G I C A L    D O C U M E N T -- the content of your thesis
+%======================================================================
+\begin{document}
+
+% For a large document, it is a good idea to divide your thesis
+% into several files, each one containing one chapter.
+% To illustrate this idea, the "front pages" (i.e., title page,
+% declaration, borrowers' page, abstract, acknowledgements,
+% dedication, table of contents, list of tables, list of figures,
+% nomenclature) are contained within the file "uw-ethesis-frontpgs.tex" which is
+% included into the document by the following statement.
+%----------------------------------------------------------------------
+% FRONT MATERIAL
+%----------------------------------------------------------------------
+\input{uw-ethesis-frontpgs} 
+
+%----------------------------------------------------------------------
+% MAIN BODY
+%----------------------------------------------------------------------
+% Because this is a short document, and to reduce the number of files
+% needed for this template, the chapters are not separate
+% documents as suggested above, but you get the idea. If they were
+% separate documents, they would each start with the \chapter command, i.e, 
+% do not contain \documentclass or \begin{document} and \end{document} commands.
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%======================================================================
+\chapter{Introduction}
+%======================================================================
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Randomization and generic coordinate systems}\label{Randomization and generic coordinate systems}
+%
+In this thesis, we focus on randomized algorithms in real algebraic geometry, where input is a sequence of polynomials $F=(f_1,\hdots,f_p)$ in $\C[X_1,\hdots,X_n]$ representing an algebraic variety $V=V(F) \subset \C^n$. We focus on algorithms which require input to satisfy certain geometric properties, and which ensure these properties by applying a random change of coordinates $\mA \in \C^{n \times n}$ to the input: given $f$ in $C[X_1, \hdots , X_n], f^{\mA}$
+denotes the polynomial $f(\mA X)$, and
+\[
+V^{\mA} = V(F^{\mA}) = V\left(f_1^{\mA},\hdots,f_p^{\mA}\right). 
+\]
+The success of these algorithms depend on the randomly chosen change of coordinates being \textit{lucky}, in the sense that there exists
+a non-empty Zariski open subset $\sO \subset \C^{n \times n}$ such that for $\mA \in \sO$, the desirable geometric properties are guaranteed for $V^{\mA}$. We have developed techniques for analyzing the error probability of such algorithms. These techniques allow us to bound the degree of the hypersurface defining the complement of the open set $\sO:$
+\[
+V(\Gamma) = \C^{n \times n} - \sO,~ \Gamma \in \C[\A],
+\]
+where $\A=(\A_{j,k})_{1 \le j,k \le n}$ are indeterminants. And therefore, by choosing a subset of rational numbers $S \subset \Q$ so that we can construct $\mA=(a_{j,k})_{1 \le j,k \le n}$ by taking $a_{j,k}\in S,$ by the DeMillo-Lipton-Schwartz–Zippel lemma, 
+\[
+\pr[\Gamma(\mA) = \bz] \leq \frac{\deg \Gamma}{|S|}.
+\]
+
+
+
+
+
+
+
+
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Main problem: computing one point in each connected component of a real variety}
+%
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Three separate cases}
+%
+We consider the problem of computing at least one point in each connected component of a real algebraic
+set $S$. This is a basic but important subroutine in real and semi-algebraic
+geometry. It is used in higher level algorithms and it is also useful on its own, since it allows one to
+decide if $S$ is empty or not, and it allows one to determine an upper bound on the number of connected components of $S$.  
+
+
+We consider three separate cases:
+%
+\begin{enumerate}
+\item\label{prob:1} $S$ is given as $S=V \cap
+\R^n$, where $V=V(f) \subset \C^n$ is a smooth and compact, complex hypersurface defined
+by a squarefree polynomial $f \in \ZZ[X_1,\dots,X_n]$.
+\item\label{prob:2} $S$ is given as $S=V \cap
+\R^n$, where $V=V(f) \subset \C^n$ is a smooth, complex hypersurface defined
+by a squarefree polynomial $f \in \ZZ[X_1,\dots,X_n]$.
+\item\label{prob:3} $S$ is given as $S=V \cap
+\R^n$, where $V=V(F) \subset \C^n$ is a smooth, complex algebraic set defined
+by a sequence of polynomials $F = (f_1,\hdots,f_p)$ in $\ZZ[X_1,\dots,X_n]$.
+\end{enumerate}
+%
+
+
+In \ref{prob:1}, given some genericity properties (which we will describe in detail, shortly), it is sufficient to compute the critical points of the projection on a line, which thus has dimension zero in generic enough
+coordinates. Indeed, assuming that $V(f) \cap \R^n$ is compact, any projection on a line has a critical point on each
+connected component of $V(f) \cap \R^n.$ 
+
+In dropping the compactness assumption for \ref{prob:2}, it is no longer guaranteed for the critical points of the projection on a line to contain one point in each connected component of $V(f) \cap \R^n$.  Now in this non-compact case,  studying suitable zero-dimensional sections of higher dimensional critical loci called \textit{polar varieties} (first
+introduced in the 1930's in order to define characteristic
+classes~\cite{Piene78,Teissier88}, and which we will discuss in great detail in Chapter \ref{Chap:polarVarieties}),
+enables one to obtain one point on each connected component. This new algorithm also requires additional genericity assumptions,  namely that the higher dimensional critical loci are in so called \textit{Noether position} (see Sction \ref{sec:gen} and Chapter \ref{Chap:N}).
+
+Now in solving Problem \ref{prob:3}, we develop an extension of the algorithm used in solving Problem \ref{prob:2}. The extension involves a new approach for modeling polar varieties, which involves introducing Lagrange variables. Solution sets are first computed with these additional Largange variables. Then, one point on each connected component is obtained by computing the projection on the $\Xb$-space.  
+
+
+
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Background}
+%
+%Algorithms for computing at least one point in each connected component of a real algebraic
+%set have been known for several decades. And the
+%complexity of these algorithms is fairly well understood. 
+
+Suppose that the polynomials in $F = (f_1,\hdots,f_p)$ each have total degree at most $d$, and coefficients of bit-size $h$. Without making any assumption on $F$, the algorithm given
+in~\cite[Section~13.1]{BaPoRo03} solves our problem using $p^{n+1}d^{O(n)}$
+operations in $\Q$. And in addition, the output of the algorithm is
+represented by polynomials of degree $d^{O(n)}$ and with coefficients of
+bit-size $hd^{O(n)}$.  The key idea of the algorithm originates with~\cite{GrVo88}, where sample points are found through the computation of
+critical points of well-chosen functions on $V(F)$.
+
+
+The number of connected components of $V(F)$ admits the lower bound $\td$, so up to polynomial factors this result is
+optimal. However, due to the generality of the algorithm, the constant
+hidden in the exponent $O(n)$ in its runtime is
+large, because the algorithm relies on infinitesimal deformations that affect
+the runtime non-trivially.
+
+
+We assume that
+$V=V(F)$ is a {\em smooth} complex algebraic set. And we place ourselves in
+the continuation of the line of work initiated by~\cite{BaGiHeMb97}:
+that reference deals with cases where $V$ is smooth and $V \cap \R^n$
+is compact, pointing out how polar varieties (see Chapter \ref{Chap:polarVarieties}) can play a role in effective real
+geometry. This paper was extended in several directions: to $V$ being
+a smooth complete intersection, still with $V\cap \R^n$
+compact~\cite{BaGiHeMb01}, then without the compactness
+assumption~\cite{EMP,BaGiHePa05}; the smoothness assumption was then partly
+dropped in~\cite{BaGiHe14,BaGiHeLePa12}.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Main results} To state our main results, we need to define 
+the {\em height} of a rational number, and of a polynomial with
+rational coefficients. We provide this now, as well as the data structures we rely on. 
+
+
+\subsection{Bit size and data structures}
+The {\em height} of a non-zero $a=u/v \in \Q$ is the maximum of
+$\ln(|u|)$ and $\ln(v),$ where $u \in \mathbb{Z}$ and $v \in
+\mathbb{N}$ are coprime. For a polynomial $f$ with rational
+coefficients, if $v \in \mathbb N$ is the minimal common denominator
+of all non-zero coefficients of $f$, then the \textit{height}
+$\htt(f)$ of $f$ is defined as the maximum of the logarithms of $v$
+and of the absolute values of the coefficients of $vf$. Note that when $f$ has integer coefficients, this is simply the maximum of the logarithms of the absolute values
+of these coefficients.
+
+
+The output of the algorithms is a finite set in $\overline{\Q}{}^n$. To
+represent it, we rely on a widely used data structure based on
+univariate
+polynomials~\cite{Kronecker82,Macaulay16,GiMo89,GiHeMoPa95,ABRW,GiHaHeMoMoPa97,GiHeMoMoPa98,Rouillier99}.
+Consider a zero-dimensional algebraic set $S \subset \C^n$ defined
+over $\Q$. A {\em zero-dimensional parametrization}
+$\scrQ=((q,v_1,\dots,v_n),\lambda)$ of $S$ consists in polynomials
+$(q,v_1,\dots,v_n)$, such that $q\in \Q[T]$ is monic and squarefree,
+all $v_i$'s are in $\Q[T]$ and satisfy $\deg(v_i) < \deg(q)$, and in a
+$\Q$-linear form $\lambda$ in variables $X_1,\dots,X_n$, such that
+\begin{itemize}
+\item $\lambda(v_1,\dots,v_n)=T q' \bmod q$;
+\item we have the equality
+  $S=\left \{\left(
+      \frac{v_1(\tau)}{q'(\tau)},\dots,\frac{v_n(\tau)}{q'(\tau)}\right
+    ) \ \mid \ q(\tau)=0 \right \}.$
+\end{itemize}
+The constraint on $\lambda$ says that the roots of $q$ are the values
+taken by $\lambda$ on $S$. The parametrization of the coordinates by
+rational functions having $q'$ as a denominator goes back
+to~\cite{Kronecker82,Macaulay16}: as pointed out in~\cite{ABRW}, it
+allows one to control precisely the size of the coefficients of
+$v_1,\dots,v_n$.
+%
+%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The compact hypersurface case}
+\begin{theorem}\label{theo:mainCH}
+  Suppose that $f \in \ZZ[X_1,\hdots,X_n]$ is squarefree, satisfies $\deg(f) \leq d$ and $\htt(f) \leq b,$ and that $V(f) \subset \C^n$ is smooth and compact. Also suppose that $0 < \epsilon < 1.$
+  
+  There exists a randomized algorithm that takes $f$ and $\epsilon$ as input and produces a zero-dimensional parameterization that includes at least one point in each connected
+  component of $V(f) \cap \R^n$, with probability at least
+  $1-\epsilon$. Otherwise, the algorithm either returns a proper
+  subset of the points, or FAIL.   In any case, the algorithm uses
+  \[
+O^{\sim}(d^{3n+1}(\log1/\epsilon)(b + \log1/\epsilon))
+  \]
+  bit operations. The polynomials in
+  the output have degree at most $d^n,$ and height 
+  \begin{align*}
+  &O^{\sim}(d^{n+1}(b + \log 1 / \epsilon)). 
+  \end{align*}
+\end{theorem}
+    
+\noindent    
+Here we assume that $f$ is given as a dense polynomial.  Following
+references such
+as~\cite{GiHeMoPa95,GiHaHeMoMoPa97,GiHeMoMoPa98,BaGiHeMb97,EMP}, it
+would be possible to refine the runtime estimate by assuming that $f$
+is given by a {\em straight-line program}, which is a sequence of
+operations $+,-,\times$ that takes as input $X_1,\dots,X_n$ and
+evaluates $f$. Any polynomial of degree $d$ in $n$ variables can be
+computed by a straight-line program that does $O(d^n)$ operations:
+evaluate all monomials of degree up to $d$ in $n$ variables, multiply
+them by their respective coefficients and sum the results. However,
+some inputs may be given by shorter straight-line program, and the
+algorithm would actually be able to benefit from this.
+
+
+
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The hypersurface case, without compactness}\label{sec:mainH}
+We now drop the compactness assumption and show that by using the algorithm by Safey El Din and Schost in \cite{EMP}, we can achieve the same soft oh complexity.  
+%
+\begin{theorem}\label{theo:mainH}
+  Suppose that $f\in\ZZ[X_1\hdots,X_n]$ is squarefree, satisfies
+  $\deg(f) \leq d$ and $\htt(f) \leq b$, and that $V(f) \subset \C^n$ is
+  smooth. Also suppose that $0 < \epsilon < 1.$
+
+  There exists a randomized algorithm that takes $f$ and $\epsilon$ as
+  input and produces $n$ zero-dimensional parameterizations, the union
+  of whose zeros includes at least one point in each connected
+  component of $V(f) \cap \R^n$, with probability at least
+  $1-\epsilon$. Otherwise, the algorithm either returns a proper
+  subset of the points, or FAIL.  In any case, the algorithm uses
+  \[
+O^{\sim}(d^{3n+1}(\log1/\epsilon)(b + \log1/\epsilon))
+  \]
+  bit operations. The polynomials in
+  the output have degree at most $d^n,$ and height 
+  \begin{align*}
+  &O^{\sim}(d^{n+1}(b + \log 1 / \epsilon)). 
+  \end{align*}
+\end{theorem}
+%
+\noindent
+Here we again assume that $f$ is given as a dense polynomial.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The algebraic set case}
+Now we generalize from the hypersurface case, where $V=V(f)$ is defined by the vanishing of a single polynomial, to varieties defined by finite sequences of polynomials. Furthermore, we do not assume $V$ is compact. And we again use the algorithm by Safey El Din and Schost in \cite{EMP}, as in Section~\ref{sec:mainH}, but with some minor extensions.
+
+Clearly, the hypersurface case from Section~\ref{sec:mainH} is covered by the general case in this section. However, the techniques are different enough that we decided to cover both separately. 
+
+
+\begin{theorem}\label{theo:mainG}
+  Let $F= (f_1,\hdots,f_p)\in\ZZ[X_1\hdots,X_n]^p$ be a sequence of polynomials with $\deg(f_i) \leq d$ and $\htt(f_i) \leq b$. Suppose that the ideal $\langle f_1,\hdots, f_p \rangle $ is radical and that $V=V(F) \subset \C^n$ is 
+  smooth with $\dim V = n-p$. Also suppose that $0 < \epsilon < 1.$
+
+  There exists a randomized algorithm that takes $F$ and $\epsilon$ as input and produces $n$ zero-dimensional parameterizations, the union
+  of whose zeros includes at least one point in each connected
+  component of $V(F) \cap \R^n$, with probability at least
+  $1-\epsilon$. Otherwise, the algorithm either returns a proper
+  subset of the points, or FAIL.  In any case, the algorithm uses
+  \[
+O^{\sim}(d^{3n+2p+1}(\log1/\epsilon)(b + \log1/\epsilon))
+  \]
+  bit operations. The polynomials in
+  the output have degree at most $d^{n+p},$ and height 
+  \[
+O^{\sim}(d^{n+p+1}(b + \log1/\epsilon)).
+  \]
+\end{theorem}
+%
+%
+\noindent 
+Here we assume that $F$ is given as a sequence of dense polynomials.  Again, following
+references such
+as~\cite{GiHeMoPa95,GiHaHeMoMoPa97,GiHeMoMoPa98,BaGiHeMb97,EMP}, it
+would be possible to refine the runtime estimate by assuming that $F$
+is given by a straight-line program. 
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Summary of contributions}
+As was dicussed in Section~\ref{Randomization and generic coordinate systems}, the algorithms rely on certain genericity properties, which we ensure by applying a carefully chosen change of coordinates $\mA \in \C^{n \times n}$ to our input variety $V \subset \C^n$. Our main contribution is to analyze precisely what conditions on our
+change of coordinates $\mA$ guarantee success. This is done by
+revisiting the key ingredients in the proofs given
+in~\cite{BaGiHeMb97} and~\cite{EMP}, and giving quantitative versions
+of these results, bounding the degree of the hypersurfaces we have to
+avoid.  
+
+
+
+%-----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+%----------------------------------------------------------------------
+\section{Thesis Outline}
+%----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Preliminaries}
+Let $\Q, \R$ and $\C$ be the fields of rational, real and complex numbers, and $\ZZ$ the ring of integers. Let $\Xb = (X_1, \hdots , X_n)$ be a sequence of variables, and for $l \in \{1,\hdots,n\}$ let $\Xb_{\leq l}$ be the subsequence of variables $(X_1, \hdots , X_l)$.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Algebraic sets} 
+Consider a sequence of polynomials $F=(f_1,\hdots,f_p)$ in $\C[X_1,\hdots,X_n].$
+An \textit{algebraic set} 
+\begin{align*}
+V = ~&V\big(F) = V(f_1,\hdots,f_p) \\
+= ~&\left\{(a_1,\hdots,a_n) \in \C^n~|~f_1(a_1,\hdots,a_n)=\hdots=f_p(a_1,\hdots,a_n)=0\right\}
+\end{align*}
+is the set of common zeros of $F$.  The set of polynomials in $\C[X_1,\hdots, X_n]$ that vanish at all points of $V$ is called the \textit{ideal of $V$,} and which we denote by 
+\[
+I(V) := \left\{f \in \C[X_1,\hdots,X_n]~|~(a_1,\hdots,a_n) \in V \Rightarrow f(a_1,\hdots,a_n)=0\right\}. 
+\]
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Irreducibility}
+An algebraic set $V \subset \C^n$ is \textit{irreducible} when $V = V_1 \cup V_2$ implies $V=V_1$  or $V=V_2$, for any $V_1,V_2 \subset V$. Furthermore, an algebraic set $V \subset \C^n$ can be uniquely decomposed into a finite union of irreducible algebraic sets:
+\[
+V = V_1 \cup V_2 \cup \hdots V_r,
+\]
+where $V_j, 1\leq j \leq r,$ are called the irreducible
+components of $V$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Dimension}
+The \textit{dimension} of an algebraic set $V \subset \C^n$, denoted $\dim V,$ can be defined in the following ways:
+\begin{enumerate}
+    \item The number of generic hyperplanes needed to intersect with $V$ to obtain a finite set. 
+    \item The Krull dimension of $\C[X_1,\hdots,X_n]/I(V)$.
+\end{enumerate}
+The \textit{codimension} of $V$ is defined to be $n - \dim V$. An algebraic set is \textit{equidimensional} if each irreducible component has the same dimension.  If each component has dimension $d$ then we say the algebraic set is $d$-equidimensional.
+\par
+We special care about algebraic sets that have dimensions zero. These sets are finite and have degree equal to cardinality.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Degree}
+The \textit{degree} of an irreducible algebraic set is the number of intersection points between itself and $\dim (V)$ generic hyperplanes. And the degree of an arbitrary algebraic set is defined as the sum of the degrees of its irreducible components.
+%
+\begin{ex}
+An algebraic set of dimension zero is a finite set, with degree equal to its cardinality.
+\end{ex}
+%
+\begin{ex}
+An algebraic set of dimension 1 is a curve, with degree equal to the number of intersection points with a generic hyperplane.
+\end{ex}
+%
+We will often apply \label{Bezout} Bezout’s bound \cite{}, which gives us that for sequence of polynomials $F = (f_1,\hdots,f_p)$ with degrees at most $D$ then $V(F)$ has degree at most $D^p$. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Noether position}
+For $i \in
+\{1,\hdots,n-p\},$  let $\pi_i$ denote the projection 
+%
+\begin{align*}
+\C^n~~~~~ &\rightarrow~~~~~ \C^i \\
+(x_1,\hdots,x_n) &\mapsto  (x_1,\hdots,x_i).    
+\end{align*} 
+A $d$-equidimensional algebraic set $Y \subset \C^n$ is in \textit{Noether position} for the projection
+$\pi_d$ when the extension $\C[X_1,\hdots,X_{d}] \rightarrow
+\C[X_1,\hdots,X_n]/I(Y)$ is integral; here, $I(Y) \subset
+\C[X_1,\hdots,X_n]$ is the defining ideal of $Y$. It then follows that, for any $\xb \in \C^d,$ the fiber $Y \cap \pi_d^{-1}(\xb)$ has dimension zero and is thus finite and not empty.
+\begin{ex}
+$\td$
+\end{ex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The Zariski topology}
+$\td$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Zariski-tangent space and regular / singular points}
+Assume that $V$ is a $d$-equidimensional algebraic set. Let $\grad_{\xb}(f)$ be the evaluation of the gradient vector of $f \in \C[X_1,\hdots,X_n]$ at $\xb \in \C$. The \textit{Zariski-tangent space} to $V$ at $\xb \in V$ is the vector space $T_{\xb}V$ defined by the equations 
+\[
+\grad_{\xb} (g) \cdot \bm v = 0,
+\] 
+for all polynomials $g$ that vanish on $V$. 
+\par 
+The point $\xb \in V$ is a \textit{regular point} if $\dim (T_{\xb}V) = d.$ Otherwise $\xb$ is a \textit{singular point}. We let $\reg(V)$ and $\sing(V)$ respectively denote the regular and singular points of $V$. The image of a regular point is a \textit{regular value} and the image of a singular point is a \textit{singular value}. When $\sing(V)$ is empty then we refer to $V$ as \textit{smooth}.
+%
+\par 
+The following is a direct consequence of \cite[Corollary 16.20]{ECA}
+%
+\begin{prop}
+If $V \subset \C^n$ is a $d$-equidimensional algebraic set with ideal $I(V)$ generated by polynomials 
+\[
+G=(g_1,\hdots,g_p) \in \C[X_1,\hdots,X_n]^p,
+\]
+then at any point $\xb$ of $\reg(V),$ $\jac_{\xb}(G)$ has full rank $n - \dim(V)$ and the kernel of $\jac_x(G)$ is equal to $T_{\xb}V.$ 
+\end{prop}
+%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Critical points and polar varieties} 
+%
+%
+%
+%For $i \in
+%\{1,\hdots,\td\},$ denote by $\pi_i$ the projection
+%\begin{align*}
+% \C^n ~~~~~&\rightarrow~~~~~ \C^i    \\
+%%(x_1,\hdots,x_n) &\mapsto (x_1,\hdots,x_i).
+%\end{align*}
+%The $i$-th
+%\textit{polar variety} 
+%\[
+%\Wi := \{\xb \in V~|~\dim \pi_i(T_\xb
+%V) < i\}
+%\]
+%is the set of critical points of $\pi_i$ on $V$. Let $J_i$ denote the truncated Jacobian matrix of $\fb=(f_1,\hdots,f_p)$ with respect to $\Xb:$
+%\[
+%J_i = 
+%\left[ 
+%\begin{array}{ccc}
+%\frac{\pa f_1}{\pa X_{i+1}}&\hdots& \frac{\pa f_1}{\pa X_{n}} \\
+%\vdots& &\vdots\\
+%\frac{\pa f_p}{\pa X_{i+1}}&\hdots& \frac{\pa f_p}{\pa X_{n}} 
+%\end{array}
+%\right] ,
+%\]
+%and let $\minors = M_{i,1},\hdots,M_{i,S_i}$ be the minors of size $p$ of %$J_i$. Notice that
+%\[
+%S_i = \binom{p}{p}\binom{n-i}{p}=\binom{n-i}{p}.
+%\]
+%Thus, $\Wi$ is defined by the vanishing of $\fb$ and $\minors.$
+%For $i$ in $\{1,\dots,n-p\}~(n-p+1$?) and $\fb$ as above, we will let $\Ii$
+%denote the sequence of polynomials 
+%\[
+%\big( \fb, \minors \right\big).
+%\]
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\section{Changes of variables}
+For a matrix $\mA$ in $\C^{n\times n}$ and $g$ in
+$\C[X_1,\hdots,X_n]$ we write $g^\mA:=g(\mA \Xb) \in
+\C[X_1,\dots,X_n]$, where $\Xb$ is the column vector with entries
+$X_1,\dots,X_n$. For a variety $Y \subset \C^n,$ we  define $Y^{\mA}$ as the image of $Y$ by the map $\phi_{\mA} : \xb \mapsto \mA^{-1}\xb.$ Notice that $g^{\mA}(Y^{\mA}) = g(\mA \mA^{-1}\xb)=g(\xb).$ 
+
+We will also have to consider matrices with generic entries. For this,
+we introduce $n^2$ new indeterminates $(\frak A_{j,k})_{1\le j,k \le
+  n}$. Then, $\A$ will denote the matrix with entries $(\frak
+A_{j,k})_{1\le j,k \le n}$, $\C(\A)$ will denote the rational function
+field $\C((\frak A_{j,k})_{1\le j,k \le n})$ and $\C[\A]$ the
+polynomial ring $\C[(\frak A_{j,k})_{1\le j,k \le n}]$.  For $g$ as
+above, we will then define the polynomial $g^\A:=g(\A \Xb)$, 
+which we may consider in either
+$\C(\A)[X_1,\dots,X_n]$ or $\C[\A,X_1,\dots,X_n]$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{comment}
+\chapter{Real algebraic geometry}
+%
+
+%----------------------------------------------------------------------
+\section{Real and complex algebraic geometry}
+%----------------------------------------------------------------------
+Research in algebraic geometry over an algebraically closed field has produced elegant mathematical theory. Recall the following cornerstone which establishes a correspondence between radical ideals and varieties. 
+%
+\begin{theorem}\label{thm:strongHilbert}(Hilbert's Nullstellensatz)
+Let $\K$ be an algebraically closed field. If $I \subset \K[X_1,\hdots,X_n]$ is an ideal, then $I(V(I))= \sqrt{I}.$ 
+\end{theorem}
+%
+\noindent
+With the assumption that $\K$ is algebraically closed, Hilbert’s Nullstellensatz establishes a fundamental relationship with algebra and geometry; namely a one-to-one correspondence between varieties and radical ideals: 
+\[
+I(V(\la f_1,\hdots, f_p \ra)) = \la f_1,\hdots, f_p \ra,
+\]
+for any $f_1,\hdots,f_p \in \K[X_1,\hdots,X_n].$ Observe the correspondence established between algebra and geometry: questions about varieties can be rephrased as algebraic questions about radical ideals, and questions about radical ideals can be rephrased as geometric questions about varieties.
+\par 
+The Weak Nullstellensatz is an important and immediate consequence. 
+%
+\begin{theorem}(The Weak Nullstellensatz)
+Let $\K$ be an algebraically closed field. If $I \subset \K[X_1,\hdots,X_n]$ is an ideal with $V(I)=\emptyset$, then $I= \K[X_1,\hdots,X_n].$
+\end{theorem}
+%
+\begin{proof}
+By Theorem \ref{thm:strongHilbert}, $\sqrt{I} = I(V(I)) = I(\emptyset) = \K[X_1,\hdots,X_n],$ so that $1 \in \sqrt{I},$ which implies that $1=1^m \in I,$ for some $m \in \mathbb{N},$ and therefore $I = \K[X_1,\hdots,X_n].$
+\end{proof}
+%
+\noindent
+The Weak Nullstellensatz is a generalization of the fact that any non-constant polynomial $f\in \K[X_1,\hdots,X_n],$ with $\K$ algebraically closed, must have at least one root. The generalization gives us that any system of polynomials strickly smaller than $\K[X_1,\hdots,X_n]$ must have at least one solution. Furthermore, it follows from the Weak Nullstellensatz that either a polynomial system has a solution or there exists a certificate that no solution exists. For instance, consider a sequence of polynomials $F = (f_1,\hdots,f_p) \in \K[X_1,\hdots,X_n]^p$. The Weak Nullstellensatz provides an algorithm for deciding whether $V(F)=\emptyset.$ First, compute a reduced Groebner basis $\mathscr{B} \subset \K[X_1,\hdots,X_n]$ of the ideal of $F$ with respect to any ordering. If $\mathscr{B} = \{1\}$ then we have computed a certificate that no solutions exist. And otherwise we know a solution does exist. 
+\par
+
+%
+%
+\section{Real algebraic geometry and applications}
+%
+Unfortunately, it is not always feasible, practical, or best to work under the assumption that $\K$ is algebraically closed. Often, practical applications require that $\K=\R$, where $\R$ is not algebraically closed (e.g. we all know that $V_{\C}(x^2+1)=\{i,-i\}$ but $V_{\R}(x^2+1)=\emptyset$). Indeed, in many applications a complex solution is not helpful, and rather, a real solution is required. For instance, deciding connectivity queries in real varieties has been used to solve robot motion planning problems \cite{Canny1987,SchostMohabBabySteps2011,SchostMohabBabySteps2014}, and has also been used in biological protein folding \cite{RoadmapProteinFolding}. Consider as well, for instance, semi-definite programming (SDP), 
+where the goal is to optimize a linear function over a spectrahedron:
+%
+\begin{align*}
+    &\min  & \bm c^T\xb  \\
+     &\textrm{subject~ to}  & M_0 + \sum_{i=1}^k x_iM_i & \succcurlyeq \bz 
+\end{align*}
+for $\bm c \in \R^m$ and $M_0,\hdots,M_k \in \R^{n \times n},$ and
+%
+\[
+M \succcurlyeq \bz \Leftrightarrow \xb^T M\xb \geq 0 ~\forall \xb \not = \bz.
+\]
+It is well known that 
+\[
+LP \subset SDP~ \cite{LinearProgramming},
+\]
+and, furthermore, the algorithms available for $SDP$ solving are efficient enough that most general $LP$ and $SDP$ solvers just use the $SDP$ algorithm for both the $LP$ and $SDP$ problems \cite{StanfordClass}. Semi-definite programming has found diverse applications in computer science, engineering, combinatorial optimization, and even quantum information \cite{}.  
+
+In comparison to Theorem \ref{thm:strongHilbert}, we have the real Nullstellensatz. %
+\begin{theorem}(The real Nullstellensatz \cite{})
+A real variety $V_{\R}(f_1,\hdots,f_s)$ is empty if and only if 
+\[
+-1 = \sum_j g_j^2 + h,
+\]
+for $g_j \in \R[X_1,\hdots,X_n]$ and $h \in I(f_1,\hdots,f_s)$.
+\end{theorem}
+%
+\noindent
+Consider the following example.
+%
+\begin{ex}
+Let $F=(f_1,f_2)=(X_1^2 + X_2^2-1,X_1-2).$ We have 
+\begin{align*}
+    -1 &= 2 + X_2^2 + (1-X_1^2-X_2^2) + (X_1^2-4)\\
+        &= (\sqrt{2})^2 + X_2^2 + \big((-1)f_1 + (X_1+2)f_2\big),
+\end{align*}
+where $(\sqrt{2})^2 + X_2^2$ is a sum of squares, and 
+\[
+(-1)f_1 + (X_1+2)f_2 \in I(F).
+\]
+\begin{figure}
+    \centering
+    \includegraphics{circleAndLine.jpg}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+\end{ex}
+%
+\noindent
+As it turns out, semi-definite programming can be used to compute sums of squares certificates.  
+%
+\begin{prop}
+A polynomial $f \in \R[X_1,\hdots,X_n]$ is a sum of squares if and only if there exists a positive semi-definite matrix $Q \in \R^{l \times l}$ with
+%
+\begin{align*}
+&f = m_d^TQm_d, ~m_d \in \R^{1 \times l}, ~l = \binom{n+d-1}{d}.
+\end{align*}
+%
+\end{prop}
+\begin{proof}
+\begin{align*}
+    Q \succcurlyeq 0 &\Leftrightarrow Q = \sum_j v_jv_j^T, ~v_j \in \td\\
+    &\Leftrightarrow f = m_d^TQm_d = \sum_j m_d^Tv_jv_j^Tm_d = \sum_j (v_j^Tm_d)^2.
+\end{align*}
+\end{proof}
+%
+
+Consider the following quote from R. Thom.
+
+``It might be argued that the importance accorded by analysis to the complex field and the theory of analytical functions during the last century has had an unfortunate effect on the orientation of mathematics. By allowing the construction of a beautiful (even too beautiful) theory which was in perfect harmony with the equally successful quantification of physical theories , it has led to a neglect of the real and qualitative nature of things. Now, well past the middle of the 20th century, it has taken the blossoming of topology to return mathematics to the direct study of geometrical objects, a study which, however, has barely begun; compare the present neglected state of real algebra geometry with the degree of sophistication and formal perfection of complex algebra geometry. In the case of any phenomenon governed by an algebraic equation it is of paramount importance to know whether this equation has solutions, real solutions, and precisely this question is suppressed when complex scalars are used. As examples of situations in which the reality place an essential role, we have the following: the characteristic values of a linear differential system, the index of critical points of a function, and the elliptic or hyperbolic character of a differential operator. ''
+\par 
+Real algebraic geometry therefore leads to some interesting new problems. And in addition, as it happens, solving polynomial systems over the real numbers has important applications. Indeed, it is often the case that the real solutions are more physically meaningful. This is true for geometric constraint systems \cite{} such as robot motion planning or control theory. Furthermore, algorithms solving for real solutions has led to the very active field of semi-definite programming and polynomial optimization. It is also true that the real solutions of varieties are nicer visually.
+
+
+
+\end{comment}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%======================================================================
+\chapter{Polar varieties, genericity statements, and algorithms}\label{Chap:polarVarieties}
+%======================================================================
+
+
+To describe the algorithms, we need to
+define {\em polar varieties}, which play a crucial role in this Thesis.
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Critical points and polar varieties}
+Let $V=V(F)$ be an equidimensional algebraic set, with $F = (f_1,\hdots,f_p)$ a sequence of polynomials in  $\C[X_1,\hdots,X_n]$. Suppose that the ideal $\langle f_1,\hdots, f_p \rangle $ is radical and that $V$ is smooth with $\dim V = n-p$.
+
+
+{\em Polar varieties} are higher dimensional critical loci that were introduced in the 1930's in order to define characteristic
+classes~\cite{Piene78,Teissier88}. And they play a central role in each algorithm we consider (for Problems \ref{prob:1}, \ref{prob:2}, \ref{prob:3}). Recall that, for $i \in
+\{1,\hdots,n-p\},$ we denote by $\pi_i$ the projection 
+%
+\begin{align*}
+\C^n~~~~~ &\rightarrow~~~~~ \C^i \\
+(x_1,\hdots,x_n) &\mapsto  (x_1,\hdots,x_i).    
+\end{align*} 
+%
+A \textit{critical point} is a singular point on the projection $\pi_i.$ In other words, the point $\xb \in V$ is a critical point if $\dim \pi_i( T_{\xb}V) < i$.
+The $i$-th
+\textit{polar variety} 
+\[
+\Wi := \left\{\xb \in V~|~\dim \pi_i(T_\xb
+V) < i\right\}
+\]
+is the set of critical points of $\pi_i$ on $V$. 
+%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%
+%
+%
+\subsection{Determinantal modeling of polar varieties}
+%
+Let $J_i$ denote the truncated Jacobian matrix of $F=(f_1,\hdots,f_p)$ with respect to $\Xb = (X_1,\hdots,X_n):$
+\[
+J_i = 
+\left[ 
+\begin{array}{ccc}
+\frac{\pa f_1}{\pa X_{i+1}}&\hdots& \frac{\pa f_1}{\pa X_{n}} \\
+\vdots& &\vdots\\
+\frac{\pa f_p}{\pa X_{i+1}}&\hdots& \frac{\pa f_p}{\pa X_{n}} 
+\end{array}
+\right] 
+\]
+and let \[\minors = \left(M_{i,1},\hdots,M_{i,S_i}\right)\] be the minors of size $p$ of $J_i$. Notice that
+\[
+S_i = \binom{p}{p}\binom{n-i}{p}=\binom{n-i}{p}.
+\]
+%
+For each $i$ in $\{1,\dots,n-p+1\}$ and $F$ as above, we will let $\Ii$
+denote the sequence of polynomials 
+\[
+\Ii := \big( F, \minors \right\big) = (f_1,\hdots,f_p,M_{i,1},\hdots,M_{i,S_i})
+\]
+%
+\begin{prop}\label{prop:3.1}
+Consider $F=(f_1,\hdots,f_p)$ in $\C[X_1,\hdots,X_n].$ If the ideal defined by $F$ is radical and $V = V(F)$ is smooth with $\dim V= d,$ then the polar variety $W(\pi_i,V) = \{\xb \in V~|~\dim \pi_i(T_{\xb}V) < i\}$ is defined by $F$ and the $n-d$ $p$-minors of $J_i.$ 
+\end{prop}
+%
+\noindent 
+To prove Proposition~\ref{prop:3.1}, we will use the following two lemmas.
+%
+\begin{lemma}\label{lem:3.2} 
+Let $\widetilde{A} = \bbm A \\ B \ebm \in \mathbb{R}^{m\times n}$ be a matrix. Then, 
+\[ 
+\rank(\widetilde{A}) = 
+\rank(A) + \rank(B|\ker(A)),
+\]
+where $B|\ker(A)$ is the restriction of the linear map defined by $B$ to the kernel of $A$. 
+\end{lemma}
+%
+\begin{proof}
+By the rank nullity theorem, we have that \begin{align*} 
+\dim \ker(A) &= 
+\rank(B|\ker(A)) +
+\dim \ker(B| \ker(A)) \\
+&= \rank(B|\ker(A)) +
+\dim (\ker(B \cap \ker(A)) \\
+&= \rank(B|\ker(A)) +
+\dim (\ker(\widetilde{A}))
+\end{align*}
+Therefore, 
+\[
+m - \rank(A) = \rank(B|\ker(A)) + m - \rank(\At)
+\]
+so that 
+\[
+\rank(\At) = \rank(A) + \rank(B| \ker (A)).
+\]
+\end{proof}
+%
+%
+\begin{lemma}\label{lem:3.3}
+Consider $F=(f_1,\hdots,f_p)$ in $\C[X_1,\hdots,X_n]$ and $\xb \in V(f_1,\hdots,f_p).$ Let $J$ denote the Jacobian matrix $\jac_{\xb}( F)$ and let $T$ denote $\ker J.$ Assume that $\dim T = d$ so that $\rank(J) = n-d.$ Then, for $i \in \{1,\hdots,n-1\},$  $\dim\pi_i(T) < i$ if and only if $\rk (\jac(F)[-,i+1,n]) < n-d.$
+\end{lemma} 
+%
+%
+\begin{proof}
+Put \[ \jt := 
+\left[
+\begin{array}{c|c}
+0 & J_{>i}  \\
+\hline \\
+\mathcal{I}_i & 0  
+\end{array}
+\right].
+\]
+Now we can calculate the rank of $\jt$ in two different ways. We have \[\rank(\jt) = i + \rank(J_{>i}).\] And, by Lemma ~\ref{lem:3.2}, 
+\begin{align*}
+    \rank(\jt) &= \rank(J) + \dim(\pi_i(\ker(J)) \\ 
+    &= \rank(J) + \dim(\pi_iT) \\
+    &= n-d + \dim \pi_i T.
+\end{align*}
+Equating both we have $i + \rank(J_{>i}) = n-d + \dim\pi_i(T)$ which implies that $\rank(J_{>i}) + (i -\dim\pi_i (T) )= n-d$. Therefore $\rank(J_{>i}) < n-d$ if and only if $\dim \pi_i (T) < i.$
+\end{proof}
+%
+Now Proposition \ref{prop:3.1} follows from Lemma \ref{lem:3.3}.
+%
+Thus, $\Wi$ is defined by the vanishing of $F$ and $\minors.$
+%
+Now consider the following example ( $\td$: better to have an example with $V$ not a hypersurface). 
+\begin{ex} (\cite[Example 3.1]{TWT})
+Let $f = X_1^2 + X_2^2 + X_3^2-1\in \C[X_1,X_2,X_3]$ and consider 
+\[
+         V=V(X_1^2 + X_2^2 + X_3^2-1) \subset \mathbb{C}^{3}.
+\]
+The critical points  of the projection $\pi_2: (x_1,x_2,x_3) \mapsto (x_1,x_2)$ on $V(f)$ are defined by $V\left(f,\pa f/\pa X_3\right).$ Hence, the polar variety is defined by those points where
+\[
+X_1^2 + X_2^2 + X_3^2-1=X_3=0.
+\]
+The critical points of the projection $\pi_1: (x_1,x_2,x_3) \mapsto (x_1)$ on $V(f)$ are defined by $V\left(f,\pa f/\pa X_2,\pa f/\pa X_3\right).$ Hence, the polar variety is defined by those points where
+\[
+X_1^2 + X_2^2 + X_3^2-1=X_2=X_3=0.
+\]
+Note the dimensions of the polar varieties: $i-1.$
+\begin{figure}[h]
+%\includegraphics[width=0.25\linewidth]{polarvariety.png}
+\includegraphics[width=0.75\linewidth]{pi1Andpi2.png}
+\centering
+\caption{The polar varieties $W(0, 1, V)$ and $W(0, 2, V),$ where $V = V (X_1^2 + X_2^2 + X_3^2-1)}$
+\end{figure}
+%
+\end{ex}
+%
+\begin{prop}
+The degree of $\deg \Wi$ is at most $\td$.
+\end{prop}
+\begin{proof}
+$\td$
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Lagrangian modeling of polar varieties} 
+%
+When $V=V(F)=V(f_1,\hdots,f_p)$ is defined by a sequence of polynomials, and when $n-i \sim 2p,$ 
+the number of minors in the determinantal modeling of the polar varieties is $S_i = \binom{n-i}{p}\sim 2^{n-i+1}.$ Hence, the number of equations grows exponentialy and the determental modeling becomes impractical algorithmicly. To circumvent this problem, for the general algeraic set case, we use an alternative modeling of the polar varieties which involves introducing Lagrange variables. %
+\begin{definition}
+Let $\Lb = (L_1,\hdots,L_p)$ be new indeterminants. Then $\lagF$ denotes the entries of the vector
+\[
+[L_1,\hdots,L_p]\cdot \jac (F,i),
+\] 
+where the Jacobian is in the variables $\Xb=(X_1,\hdots,X_n).$
+\end{definition}
+%
+\noindent 
+Since $p \leq n-i$, if there exists a non-zero vector $\lb = (l_1,\hdots,l_p) \in \C^p$ that cancels $[L_1,\hdots,L_p]\cdot \jac (F,i)$ then $\ji$ is a rank deficient matrix and the minors of size $p$ vanish. We can therefore describe polar varieties as projections of zeros of such systems. Denote by $\sW(\pi_i,V)$ the variety
+\[
+\sW(\pi_i,V) := V\left(F, \lagF\right). 
+\]
+To enforce that $\lb \not = (0,\hdots,0)$, we add a linear form $\udl-1$, for $\ub = (u_1,\hdots,u_p) \subset \C^p.$ Denote by $\Wil$ the variety
+\[
+\Wil := V\left(F, \lagF,\udl-1\right).
+\]
+We will let $\sI(i,F)$
+denote the polynomials 
+\[
+\sI(i,F) := \left(F, \lagF \right),
+\]
+and for $\ub = (u_1,\hdots,u_p) \in \C^p,$ we will let $\Iil$
+denote 
+\[
+\Iil := \left(F, \lagF,\udl-1 \right).
+\]
+\begin{prop}
+The degree of $\Wil$ is at most $d^{\hspace{.5mm}p+n-i+1}.$
+\end{prop}
+\begin{proof}
+Let $g_1,\hdots,g_{n-i}$ denote the ``Lagrange polynomials''
+\[
+[g_1,\hdots,g_{n-i}] := \lagF = [L_1,\hdots,L_p]\cdot \jac (F,i).
+\]
+Since each polynomial in the sequence $F=(f_1,\hdots,f_p)$ has degree at most $d$, the degrees of each $g_i$ are also bounded by $d.$  Thus, after adding the linear form $\udl,$ by Bezout's bound \ref{Bezout}, we obtain
+\[
+\deg \Wil \leq d^{\hspace{.5mm}p+n-i+1}. 
+\]
+\end{proof}
+%
+%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Genericity statements}\label{sec:gen}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+Here we state the genericity properties that each algorithm requires, and we state the key results which are used in the proofs of Theorems \ref{theo:mainCH}, \ref{theo:mainH}, and \ref{theo:mainG}. These results that we state in this section are quantitative versions of the facts that, in generic coordinates, polar varieties are smooth, equidimensional, and in Noether position (or empty). 
+
+
+Recall that an equidimensional algebraic set $Y \subset \C^n$ of
+dimension $d$ is in \textit{Noether position} for the projection
+$\pi_d$ when the extension $\C[X_1,\hdots,X_{d}] \rightarrow
+\C[X_1,\hdots,X_n]/I(Y)$ is integral, and here, $I(Y) \subset
+\C[X_1,\hdots,X_n]$ is the defining ideal of $Y$. In this case, for any $\xb \in \C^d,$ the fiber $Y \cap \pi_d^{-1}(\xb)$ has dimension zero (so it is finite and not empty).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The hypersurfase case}
+Consider $f \in \ZZ[X_1,\hdots,X_n]$ with total degree $d$, and assume
+that $f$ is squarefree and that $V(f) \subset \C^n$ is smooth. The key
+to the proof of Theorems~\ref{theo:mainCH} and \ref{theo:mainH} are the following results.
+
+First recall that, for $i$ in $\{1,\dots,n\}$ and $f$ as above, we let $\I(i, f)$
+denote the sequence of $n-(i-1)$ polynomials \[\left(f, \frac{\pa f}{\pa
+  X_{i+1}},\dots,\frac{\pa f}{\pa X_n}\right).
+\]
+As pointed out in the
+introduction, their zero-set is the $i$-th polar variety
+$W(\pi_i,V(f))$.  
+
+We say that $f$ satisfies $\textbf{H}_i$ if
+\begin{enumerate}
+\item For any $\xb$ in $W(\pi_i,V(f))$, the Jacobian matrix
+  $\jac_\xb(\I(i, f))$ has full rank $n-(i-1)$ at $\xb$.
+
+  {\em By the Jacobian Criterion~\cite[Corollary 16.20]{ECA}, this
+  implies that $W(\pi_i,V(f))$ is either empty or $(i-1)$-equidimensional,
+  and that $\I(i, f)$ defines a radical ideal.}
+
+\smallskip
+
+\item $W(\pi_i,V(f))$ is either empty or in Noether position for
+  $\pi_{i-1}$.
+\end{enumerate}
+Given $\bm \sigma = (\sigma_1,\hdots,\sigma_{i-1})$
+in $\C^{i-1}$, we further say that $f$ and $\bm \sigma$ satisfy
+$\textbf{H}'_i$ if
+\begin{enumerate}
+\item For any root $\xb$ of 
+\[
+\left(X_1-\sigma_1,\dots,X_{i-1}-\sigma_{i-1},f,\frac{\pa f}{\pa
+  X_{i+1}},\dots,\frac{\pa f}{\pa X_n}\right),
+\]
+  the Jacobian matrix of these equations at $\xb$ has full rank $n.$ 
+  
+{\em By the Jacobian Criterion~\cite[Corollary 16.20]{ECA}, this
+  implies that there are finitely many solutions to these equations.}
+%\item The ideal generated by polynomials $X_1-\sigma_1,\dots,X_{i-1}-\sigma_{i-1},f,{\pa f}/{\pa
+%  X_{i+1}},\dots,{\pa f}/{\pa X_n}$ is
+%  radical.
+%  
+%  {\em By point (2) above, we know that there are finitely many solutions 
+%    to these equations.}
+\end{enumerate}
+
+The proof of Theorem \ref{theo:mainH} requires both $\textbf{H}_i$ and $\textbf{H}'_i$, but Theorem \ref{theo:mainCH} only requires $\textbf{H}_i$. 
+
+Even if $f$ does not initially satisfy $\textbf{H}_i$, it does after applying a generic change of variables. The precise
+statement is as follows. 
+
+
+\begin{theorem}\label{theo:H}
+  For $i=1,\dots,n$, there exists a non-zero polynomial $\D_i \in
+  \C[\A]$ of degree at most $5n^2(2d)^{2n}$ such that if $\mA \in
+  \C^{n\times n}$ does not cancel $\D_i$, then $\mA$ is invertible and
+  $f^\mA$ satisfies $\textbf{H}_i$.
+\end{theorem}
+
+\begin{theorem}\label{theo:Hp}
+  For $i=1,\dots,n$, suppose that $f$ satisfies $\textbf{H}_i$, then there exists a non-zero polynomial $\Xi_{i} \in \C[S_1,\dots,S_{i-1}]$ of degree at most $d^{2n}$ such that if $\bm \sigma \in \C^{i-1}$ does not
+  cancel $\Xi_{i}$, then $f$ and $\bm \sigma$ satisfy $\textbf{H}_i'$.
+\end{theorem}
+
+We prove these theorems in Sections \ref{sec:4.4} and \ref{sec:5.2}, respectively. In the compact hypersurface case, when proving Theorem \ref{theo:mainCH} (one of the main results), only Theorem \ref{theo:H} is used. When proving Theorem \ref{theo:mainH} (after removing the compactness assumption) both Theorems \ref{theo:H} and \ref{theo:Hp} are used. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The general case}
+Consider $F= (f_1,\hdots,f_p) \in \ZZ[X_1,\hdots,X_n]^p$ with $\deg(f_i) \leq d$ and $\htt(f_i) \leq b$. Assume that the ideal $\langle f_1,\hdots, f_p \rangle $ is radical and that $V=V(F) \subset \C^n$ is smooth with $\dim V = n-p$. 
+
+We say that $F$ satisfies $\textbf{G}_i$ if
+%
+%
+\begin{enumerate}
+\item  $W(\pi_i,V(F))$ is either empty or $(i-1)$-equidimensional.
+\item For any $(\xb,\lb)$ in $\mathscr{W}(\pi_i,V(F))$, the Jacobian matrix of $\mathscr{I}(i,F)$ has full rank $p+n-i$ at $(\xb,\lb)$.  
+
+{\em By the Jacobian Criterion~\cite[Corollary 16.20]{ECA}, this
+  implies that $\mathscr{I}(i,F)$ defines a radical ideal.}
+\item $W(\pi_i,V(F))$ is either empty or in Noether position for
+  $\pi_{i-1}$.
+\smallskip
+\end{enumerate}
+%
+\noindent 
+When this holds, given $\bm \sigma = (\sigma_1,\hdots,\sigma_{i-1})$ 
+in $\C^{i-1}$, we further say that $F$ and $\bm \sigma$ satisfy
+$\textbf{G}'_i$ if
+\begin{enumerate}
+\item For any $(\xb,\lb)$ in $\mathscr{W}(\pi_i,V(F))$, the Jacobian of the system of polynomials  
+\[
+ X_1-\sigma_1,\dots,X_{i-1}-\sigma_{i-1},F(\xb), \lagF
+\]
+has full rank $p+n$. {\em By the Jacobian Criterion~\cite[Corollary 16.20]{ECA}, this implies that there are finitely many solutions to these equations.}
+\end{enumerate}
+%
+%
+Now, we need to prove that for a carefully chosen $\ub \in \C^p,$ we have the inclusion \[\Iil \cap \C[X_1,\hdots,X_n] \subset \Iir.\] Here, we will make this precise and describe what properties we need $\ub$ to satisfy. Then, at the end of this section, we will give the genericity statements for the general case (i.e. the key result used in proving Theorem \ref{theo:mainG}).
+
+Let $i \in \{1,\hdots,n-p\},$ and assume in all that follows that $F$ satisfies $\bm G_i$. Let $Z$ be an irreducible component of the polar variety $\Wi$.  
+%
+\begin{lemma}\label{lem:3.7}
+There exists a non-zero vector of rational functions \[\lb = (l_1,\hdots,l_p)=\left(\frac{N_1}{D_1},\hdots,\frac{N_p}{D_p}\right)\in \C(Z)^p,\] and an open and dense subset $Z^{'} \subset Z$ defined by
+\begin{enumerate}
+    \item $D_1(\xb)\cdot D_2(\xb) \cdots D_p(\xb) \not = \bz$;
+    \item $N_j(\xb) \not = \bz,$ for some $j \in \{1,\hdots,p\}$ 
+\end{enumerate}
+and such that for $\xb \in Z^{'}$ we have
+\[
+\lb(\xb) \cdot \ji = \bz.
+\]
+%
+\end{lemma}
+%
+\begin{proof}
+Recall that for $\xb \in Z,$ the rank of $\ji$ is at most $p-1$, because $\Wi$ is defined by the vanishing of $F$ and $\minors$. Now,  at $\xb \in Z,$ consider the Jacobian matrix $\jac_{\xb}(F,i)$  with entries taken modulo the ideal $I(Z)$, and consider these entries as elements in $\C(Z);$ let $\jt$ denote this matrix. (Note that since $Z$ is irreducible, the function field $\C(Z)$ is well defined.)  Since the $p$-minors of $\ji$ are zero over $\xb \in Z,$ the $p$-minors of $\jt$ are also zero at $\xb \in Z.$ And therefore the rank of $\jt$ is also at most $p-1$ at $\xb \in Z.$ Thus, some well defined $\lb \in \C(Z)^p-\{\bz\}$
+exists with rational entries in $\xb$. and with $\lb({\xb}) \cdot \jt = \bz$. Since $\lb$ is well defined, $D_1(\xb)\cdot D_2(\xb) \cdots D_p(\xb) \not = \bz$ and since $\lb \not \in \bz,N_j(\xb) \not = \bz,$ for some $j \in \{1,\hdots,p\}$. And therefore $\lb({\xb}) \cdot \ji = \bz$ as well.
+\end{proof}
+%
+\noindent
+Let $Z^{'}$ be as in the proof above, and let $\lb_Z$ be the vector of rational functions corresponding to the irreducible component $Z$ and consider the open set
+\[
+\mathscr{O}_{Z} := 
+\left\{\ub \in \C^p~|~\ub^T\cdot \lb_{Z} \not = \textit{\textbf{0}}\right\}.
+\]
+We know, trivially, that $\mathscr{O}_Z$ is not empty, because $\lb_{Z} \not = \bz$.  Now let $\sO$ denote the intersection
+\[
+\mathscr{O} := 
+\bigcap_Z \mathscr{O}_{Z},
+\]
+which we also know to be open and non-empty because it is a finite intersection of non-empty open sets.
+
+\begin{prop}\label{prop:polarVs1}
+For $\ub \in \mathscr{O},$ we have the inclusion 
+\[
+\Iil \cap \C[X_1,\hdots,X_n] \subset \Iir.
+\]
+\end{prop}
+%
+%
+\noindent 
+In proving Proposition \ref{prop:polarVs1}, we will need the following two lemmas.
+%\begin{lemma}\label{lem:3.8}
+%For all irreducible components $Z$ of $\Wi$ and $\ub \in \mathscr{O},$ there exists $Z^o \subset Z,$ Zariski open and dense in $Z$, such that for all $\xb \in Z^o, \ub^T\cdot \lb_{\xb} \not = \bz.$ (Now this istrivial?)
+%\end{lemma}
+\begin{lemma}\label{lem:3.8}
+Take any $\ub \in \mathscr{O}.$ For all irreducible components $Z$ of $\Wi$, there exists Zariski open and dense subsets $Z^o \subset Z^{'},$ such that if  $\xb \in Z^o$ then $\ub^T\cdot \lb_{Z}(\xb) \not = \bz.$ 
+\end{lemma}
+%
+\begin{proof}
+For $\xb \in Z$, let $\psi$ denote the function 
+\begin{align*}
+Z  &\rightarrow \C(Z)\\    
+    \xb &\mapsto \ub^T \cdot \lb_{Z}(\xb).    
+\end{align*}
+ By Lemma \ref{lem:3.7}, we know $\psi$ is a rational function in $\xb.$ Let us write 
+\[
+\psi(\xb) = \sum_{i=1}^p\frac{u_iN_{i}(\xb)}{D_{i}(\xb)}
+= \frac{u_1N_1(\xb)D_2(\xb)\cdots D_p(\xb) + \hdots + u_pN_p(\xb)D_1(\xb)\cdots D_{p-1}(\xb)}{D_1(\xb) \cdots D_p(\xb)}
+. 
+\]
+Denote by $D(\xb)$ the product $D_1(\xb) \cdots D_p(\xb)\not = \bz$ and put  
+\[
+Z^o := \left\{\xb \in Z~|~D(\xb)\cdot \psi(\xb) = u_1N_1(\xb)D_2(\xb)\cdots D_p(\xb) + \hdots + u_pN_p(\xb)D_1(\xb)\cdots D_{p-1}(\xb)\not = \bz\right\}.
+\]
+Notice that $Z^{o}$ is not empty. Indeed, $\td.$ Hence, $Z^o$ is both open and dense in $Z$, because $Z^o \not = \emptyset$, $Z$ is irreducible, and $Z^o \subset Z^{'} \subset Z$. By construction we also have that if $\xb \in Z^o$ then $D({\xb})\psi(\xb) = D({\xb})(\ub^T \cdot \lb_Z(\xb))\not = \bz$ so that $\ub^T \cdot \lb_{Z}(\xb)\not = \bz$.
+\end{proof}
+%
+\begin{lemma}\label{lem:3.9}
+For $\ub \in \mathscr{O}$ and for all irreducible components $Z$ of $\Wi,$ we have $Z^o \subset \pi_{\Xb}\left(\Wil\right).$
+\end{lemma}
+%
+\begin{proof}
+By Lemma \ref{lem:3.8}, $\xb \in Z^o$ implies that $\ub^T \cdot \lb_{Z}(\xb) \not = \bz.$ Set
+\[
+\bm \alpha_{\xb} = \left(\xb,\left(\frac{1}{\ub^T\cdot \lb_{Z}(\xb)}\right)\lb_{Z}(\xb)\right). 
+\]
+Then $F(\xb)=\bz,$
+\begin{align*}
+    \left(\frac{1}{\ub^T\cdot \lb_{Z}(\xb)}\right)\lb_{Z}(\xb)\cdot \ji = \left(\frac{1}{\ub^T\cdot \lb_{Z}(\xb)}\right)\cdot \bz = \bz,
+\end{align*}
+and
+\[
+\ub^T\cdot\left(\frac{1}{\ub^T\cdot \lb_{Z}(\xb)}\right)\lb_{Z}(\xb)-1 =
+    \cdot\left(\frac{\ub^T\cdot\lb_{Z}(\xb)}{\ub^T\cdot \lb_{Z}(\xb)}\right)-1=1-1=0,
+\]
+so that $\ax \in \Wil.$ Therefore $Z^o \subset \pi_{\Xb}\left(\Wil\right).$
+%
+\end{proof}
+%
+%
+%
+\noindent 
+Now take $P \in \Iil\cap \C[X_1,\hdots,X_n],$ and $Z$ an irreducible component of $\Wi.$ Then, for $\xb \in Z^o$ it follows from Lemma \ref{lem:3.9} that there exists $\bm \alpha \in \C^p$ with $(\xb, \bm \alpha) \in \Wil.$ Then 
+\[
+P(\xb, \bm \alpha) = P(\xb) = \bz.
+\]
+Hence, $P$ is zero on $Z^o$ and thus $P$ is also zero on $Z$. Therefore, $P$ is zero on $\Wi$ and thus $P$ is in $\Iir.$ This finishes the proof of Proposition \ref{prop:polarVs1}. 
+%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\noindent
+Now, let $Z_i$ be the irreducible components of $W(\pi_i,V(F))$ so that
+\[
+W(\pi_i,V(F)) = \bigcup_{i=1}^r Z_i.
+\]
+When both $\textbf{G}_i$ and $\textbf{G}_i^{'}$ hold, we in addition say that $\bm u$ satisfies $\textbf{G}_i^{''}$ when 
+\begin{enumerate}
+    \item $\ub \in \sO := \left\{\bm u \in \C^p~|~ \bm u^T \cdot \lb_{Z_1} \not = 0\right,\hdots,\bm u^T \cdot \lb_{Z_r} \not = 0\}.$
+\end{enumerate}
+
+\noindent
+Now we can give the genericity statements for the general case; we prove the following.  
+%
+\begin{theorem}\label{theo:NoetherPositionG}
+  For all $i\in\{1,\dots,n-p+1\}$, there exists a non-zero polynomial $\D_i$ in
+  $\C[\A]$ of degree at most $6n^2(2d)^{5n}$ such that if $\mA \in
+  \C^{n\times n}$ does not cancel $\D_i$, then
+  $F^\mA$ satisfies $\textbf{H}_i$.
+\end{theorem}
+%
+\begin{theorem}\label{}
+  For all $i\in\{1,\dots,n-p+1\}$, suppose that $F$ satisfies $\textbf{H}_i$, then there exists a non-zero
+  polynomial $\Xi_{i} \in \C[S_1,\dots,S_{i-1}]$ of degree at most
+  $\td$ such that if $(\bm \sigma,\ub) \in \C^{i-1}$ does not
+  cancel $\Xi_{i}$, then $F$ and $\sigma$ satisfy $\textbf{H}_i'$.
+\end{theorem}
+%
+\begin{theorem}\label{}
+  For all $i\in\{1,\dots,n-p+1\}$, suppose that $F$ satisfies $\textbf{H}_i$ and suppose that $F$ and $\bm \sigma$ satisfy $\textbf{H}_i'$, then there exists a non-zero
+  polynomial $\Upsilon_{i} \in \C[T_1,\dots,T_{p}]$ of degree at most
+  $\td$ such that if $\bm u \in \C^{p}$ does not
+  cancel $\Upsilon_{i}$, then $\bm u$ satisfies $\textbf{H}_i{''}$.
+\end{theorem}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Related results in the literature}
+Some related results appear in the literature; for instance, Lemma 5
+in~\cite{JeSa10} or Proposition 4.5
+in~\cite{SharpEstimatesForTheEffectiveN} are quantitative Noether
+position statements. However, Theorems~\ref{theo:H} and \ref{theo:NoetherPositionG} do not follow
+from these previous results. Indeed, those references would allow us
+to quantify when $W(\pi_i,V(F))^\mA$ is in Noether position, whereas
+we need to understand when $W(\pi_i,V(F^\mA))$ is. As we pointed out
+before, these two sets are in general different.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{comment}
+
+\section{More on Lagrangian modeling of polar varieties}
+%
+Assume in all that follows that $F$ satisfies $\bm G_i$. Let $Z$ be an irreducible component of the polar variety $W(\pi_i,V(F))$.  
+%
+\begin{lemma}\label{lem:3.7}
+For $\xb \in Z,$ there exists a non-zero vector $\lb_{\xb}\in \C^p$ in the left nullspace of $\ji,$ such that $\lb_{\xb}$ has rational entries in $\xb.$
+\end{lemma}
+%
+\begin{proof}
+Recall that for $\xb \in Z, \rk \ji \leq p-1$, as $W$ is defined by the vanishing of $F$ and $\minors$. Note that since $Z$ is irreducible, the function field $\C(Z)$ is well defined. Let $\mathscr{B}$ denote a Gr\"obner basis (in what monomial order?) of $\I$ and consider $\jac_{\xb}(F,i)$  with entries taken modulo the ideal defined by $\mathscr{B}.$ Let $\jt$ denote this matrix. Since the entries of $\jt$ are defined over the field $\C(Z)$, we know that  $\lb_{\xb} \in \C(Z)^p-\{\bz\}$ exists, thus having rational entries in $\xb$ and with $\lb_{\xb} \cdot \jt = \bz$. 
+\end{proof}
+%
+\noindent
+Take some $\xb_Z \in Z$ and consider the open set
+\[
+\mathscr{O}_{Z} = 
+\left\{\ub \in \C^p~|~\ub^T\cdot \lb_{\xb_Z} \not = \textit{\textbf{0}}\right\}.
+\]
+Notice that, trivially, $\mathscr{O}_Z$ is not empty because $\lb_{\xb_Z} \not = \bz$. Now, set
+\[
+\mathscr{O} = 
+\bigcap_Z \mathscr{O}_{Z}.
+\]
+We also know that $\mathscr{O}$ is Zariski open and non-empty, because it is a finite intersection of non-empty Zariski open sets.
+%
+\begin{lemma}\label{lem:3.8}
+For all irreducible components $Z$ of $W$, and for $\ub \in \mathscr{O},$ there exists $Z^o \subset Z,$ Zariski open and dense in $Z$, such that for all $\xb \in Z^o, \ub^T\cdot \lb_{\xb} \not = \bz.$
+\end{lemma}
+%
+\begin{proof}
+For $\xb \in Z$, let $\psi$ denote the function 
+\begin{align*}
+Z  &\rightarrow \C(Z)\\    
+    \xb &\mapsto \ub^T \cdot \lb_{\xb}.    
+\end{align*}
+ By Lemma \ref{lem:3.7}, we know $\psi$ is a rational function in $\xb.$ Let us write 
+\[
+\psi(\xb) = \sum_{i=1}^p\frac{N_{\xb,i}}{D_{\xb,i}},~N_{\xb,i} \in \C[Z], D_{\xb,i} \in \C[Z]-\{0\}. 
+\]
+Put $D_{\xb} := \LCM_{1\leq i \leq p}(D_{\xb,i}),$ notice that $D_{\xb} \not = \bz$, and put  
+\[
+Z^o := \left\{\xb \in Z~|~D_{\xb}\psi(\xb) = D_{\xb}(\ub^T \cdot \lb_{\xb})\not = \bz\right\}.
+\]
+We then have that $D_{\xb_Z}\psi(\xb_Z) \not = \bz,$
+because $\ub \in \mathscr{O}$ implies that $\psi(\xb_Z)= \ub \cdot \lb_{\xb_Z} \not = \bz$ and because $D_{\xb_Z} \not = \bz$.  Hence, $Z^o$ is both open and dense in $Z$, because $Z^o \not = \O$ and $Z$ is irreducible. By construction we also have that if $\xb \in Z^o$ then $D_{\xb}\psi(\xb) = D_{\xb}(\ub^T \cdot \lb_{\xb})\not = \bz$ so that $\ub^T \cdot \lb_{\xb}\not = \bz$.
+\end{proof}
+%
+\begin{lemma}\label{lem:3.9}
+For $\ub \in \mathscr{O}$ and for all irreducible components $Z$ of $W,$ $Z^o \subset \pi_{\Xb}(\Wl)$.
+\end{lemma}
+%
+\begin{proof}
+By Lemma \ref{lem:3.8}, $\xb \in Z^o$ implies that $\ub^T \cdot \lb_{\xb} \not = \bz.$ Set
+\[
+\bm \alpha_{\xb} = \left(\xb,\left(\frac{1}{\ub^T\cdot \lb_{\xb}}\right)\lb_{\xb}\right). 
+\]
+Then $F(\xb)=\bz,$
+\begin{align*}
+    \left(\frac{1}{\ub^T\cdot \lb_{\xb}}\right)\lxb\cdot \ji = \left(\frac{1}{\ub^T\cdot \lb_{\xb}}\right)\cdot \bz = \bz,
+\end{align*}
+and
+\[
+\ub^T\cdot\left(\frac{1}{\ub^T\cdot \lxb}\right)\lxb-1 =
+    \cdot\left(\frac{\ub^T\cdot\lxb}{\ub^T\cdot \lxb}\right)-1=1-1=0,
+\]
+so that $\ax \in \Wl.$ Therefore $Z^o \subset \pi_{\Xb}(\Wl).$
+%
+\end{proof}
+%
+\begin{lemma}\label{lem:3.10}
+For $\ub \in \mathscr{O}, \Il \cap \C[X_1,\hdots,X_n] \subset \Ir.$
+\end{lemma}
+%
+\begin{proof}
+%
+%\begin{align*}
+%&\Il^{\mA} \cap \C[X_1,\hdots,X_n]\\ 
+%=&~I(V(\Il^{\mA} \cap \C[X_1,\hdots,X_n]))\\  
+%\subset &~ I(W^{\mA}) = \I^{\mA}.
+%\end{align*}
+Take $P \in \Il\cap \C[X_1,\hdots,X_n],$ and $Z$ an irreducible component of $W.$ Then, for $\xb \in Z^o$ it follows from Lemma \ref{lem:3.9} that there exists $\bm \alpha \in \C^p$ with $(\xb, \bm \alpha) \in \Wl.$ Then 
+\[
+P(\xb, \bm \alpha) = P(\xb) = \bz.
+\]
+Hence, $P$ is zero on $Z^o$ and thus $P$ is zero on $Z$ also. Therefore, $P$ is zero on $W$ and $P \in \Ir.$ 
+%
+\end{proof}
+
+\end{comment}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Main algorithms}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The compact hypersurface case}
+Recall Problem \ref{prob:1}: $S$ is given as $S=V \cap
+\R^n$, where $V=V(f) \subset \C^n$ is a smooth and compact, complex hypersurface defined
+by a squarefree polynomial $f \in \ZZ[X_1,\dots,X_n]$. 
+
+Given a sufficiently generic  $\mA \in \C^{n \times n},$ to obtain one point in each connected component, it is sufficient to compute the first polar variety: 
+\[
+W\left(\pi_1,V(f^{\mA})\right) = V\left( f^{\mA},\frac{\pa
+    f^{\mA}}{\pa X_{2}},\hdots,\frac{\pa f^{\mA}}{\pa X_n} \right),
+\]
+which describes the critical points of the projection
+on a line and thus has dimension zero (for a sufficiently generic change of coordintes $\mA$). Indeed, since $V(f) \cap \R^n$ is compact, any projection on a line has a critical point on each
+connected component of $V(f) \cap \R^n.$ Thus, the first polar
+variety has dimension zero and gives one point on each
+connected component.
+
+\subsection{The hypersurface case, without compactness}
+Now recall Problem \ref{prob:2}: $S$ is given as $S=V \cap
+\R^n$, where $V=V(f) \subset \C^n$ is a smooth, complex hypersurface defined
+by a squarefree polynomial $f \in \ZZ[X_1,\dots,X_n]$.
+
+
+For $i$ in $\{1,\hdots,n\},$ assuming that $f$ satisfies $\bm H_i$ and that $f$ and 
+$\bm \sigma = (\sigma_1,\dots,\sigma_{i-1}) \in \Q^{i-1}$ satisfy $\bm H_i^{'},$ it suffices to solve the systems defined
+by
+\begin{equation}\label{eq:syst}
+X_1-\sigma_1,\dots,X_{i-1}-\sigma_{i-1}, f, \frac{\pa f}{\pa
+  X_{i+1}} ,\dots,\frac{\pa f}{\pa X_n},  
+\end{equation}
+for $i=1,\dots,n$.  They all admit finitely many solutions, and
+Theorem~2 in~\cite{EMP} proves that the union of their solution sets
+contains one point on each connected component of $V \cap \R^n$. 
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The general case}
+And finally, recall Problem \ref{prob:3}: $S$ is given as $S=V \cap
+\R^n$, where $V=V(F) \subset \C^n$ is a smooth, complex algebraic set defined
+by a sequence of polynomials $F = (f_1,\hdots,f_p)$ in $\ZZ[X_1,\dots,X_n]$.
+
+For $i$ in $\{1,\hdots,n-p+1\},$ assume that $F$ satisfies $\textbf{G}_i$, assume that $F$ and $\bm \sigma = (\sigma_1,\hdots,\sigma_{i-1}) \in \C^{i-1}$ satisfy $\textbf{G}'_i$, and assume that $\ub \in \C^p$ satisfies $\textbf{G}_i^{''}.$ It then suffices to solve the systems defined by
+%
+\begin{equation}\label{eq:syst1}
+X_1-\sigma_1,\dots,X_{i-1}-\sigma_{i-1}, F^{\mA},  \minorsA,  
+\end{equation}
+%
+for each $i\in \{1,\dots,n-p+1\}$.  They all admit finitely many solutions, and
+Theorem~2 in~\cite{EMP} proves that the union of their solution sets
+contains one point on each connected component of $V \cap \R^n$. However, since the number of minors can grow exponentially in $n$ (recall that the number of minors equals $S_i \sim  \binom{n-i}{p}\sim 2^{n-i+1}$)
+we avoid explicitly solving the equations in \eqref{eq:syst1} and instead use the Lagrangean modeling of polar varieties. We instead solve the equations
+%
+\begin{equation}\label{eq:syst2}
+X_1-\sigma_1,\dots,X_{i-1}-\sigma_{i-1}, F^{\mA}, \lagFA ,\udl-1,
+\end{equation}
+%
+and then compute the projections of each solution set on the $\Xb$-space.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%======================================================================
+\chapter{Transversality}
+%======================================================================
+
+
+
+
+
+
+This chapter will require the following definitions and notation. 
+
+
+
+
+\section{Definitions and notation: critical points of polynomials mappings}\label{sec:criticalPoints}
+%Let $\phi : V \rightarrow \C^m$ be a polynomial mapping. A \textit{critical point} of $\phi$ is a regular point of $V$ with $d_x \phi(T_xV) \not = \C^m,$ where $d_x \phi$ is the differential of $\phi$ at $x.$ We denote by $W^o(\phi,V) \subset \reg(V)$ the set of critical points of $\phi.$ A \textit{critical} value of $\phi$ is the image of a critical point by $\phi$.
+
+If $\bm \Psi : Y \rightarrow \C^t$ is a mapping
+from a smooth algebraic set $Y$ to $\C^t$, with $t\le \dim(Y)$, a {\em
+  critical point} of $\bm \Psi$ is a point $\bm y \in Y$ such that the
+image of the tangent space $T_{\bm y} Y$ by the differential $d_{\bm
+  Y} \bm \Psi$ has dimension less than $t$. When for instance
+$Y=\C^v$, we have $T_{\bm y} Y=\C^v$ and this condition is equivalent
+to the Jacobian of $\bm \Psi$ having rank less than $t$ at $\bm y$.
+{\em Critical values} are the images by $\Psi$ of critical points; the
+complement of this set are the {\em regular values} (so a regular
+value is not necessarily in the image of~$\bm\Psi$).
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{comment} 
+%----------------------------------------------------------------------
+\section{Tranversality: definitions and examples}
+%----------------------------------------------------------------------
+\end{comment}
+
+
+
+
+
+%----------------------------------------------------------------------
+\section{Weak tranversality}
+%----------------------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Let $n,\dt,$ and $m$ be positive integers, with $m \le n$, and denote
+by $\bm\Phi :\C^n \times \C^{\dt} ~ \rightarrow \C^{m}$ a mapping
+defined by polynomials in $\C[\Xb,\Thetab]$, where $\Xb$,
+resp.\ $\Thetab$, is a set of $n$, resp.\ $\dt$, indeterminates.  And for
+$\thetab$ in $\C^{\dt}$, consider the induced mapping 
+%
+\begin{align*}
+\bm\Phi_{\thetab} : \C^n &\rightarrow \C^{m} \\
+\xb&\mapsto \bm\Phi(\xb,\thetab).
+\end{align*}
+%
+Thom's weak transversality lemma, as given for instance in~\cite{demazure2000bifurcations}, tells us that if $\bz$ is a regular value of $\bm \Phi$, then for a generic $\bm \vt \in \C^s,$ $\bz$ is a regular value of the induced mapping $\bm\Phi_{\thetab},$ where here transversality to a point is rephrased entirely in terms of
+critical and regular values.  We have developed the following quantitative version of Thom's weak transversality.
+%
+\begin{prop} [Weak transversality]\label{prop:weak_t}
+Let $\mathscr{O} \subset \C^n$ be a Zariski open set and suppose that $\bm 0$ is a regular value of $\bm\Phi$ on $\mathscr{O} \times \C^{s}$. Then there
+    exists a non-zero polynomial $\Gamma \in \C[\Thetab]$ of degree at
+    most $d^{m+n}$ such that for $\thetab$ in $\C^\dt$, if
+    $\Gamma(\thetab)\ne 0$ then $\bm 0$ is a regular value
+    of~$\bm\Phi_{\thetab}$ on $\mathscr{O}$.
+\end{prop}
+\noindent 
+This result allows us to establish the first
+items in properties ${\bf H}_i$ and ${\bf G}_i$,  as well as properties ${\bf H}'_i$ and ${\bf G}_i^{'}$. 
+%
+%
+\par 
+Thom's weak transversality generalizes Sard's lemma, which states that the set of critical values of a smooth function $\R^n \to \R^m$ has measure zero. In Thom's weak transversality, the bad parameters (for us, the unlucky changes of coordinates) show up as the critical values of a smooth function. One can give ``algebraic''
+versions of Sard's lemma, for semi-algebraic mappings $\R^n \to \R^m$ as
+in~\cite[Chapter~9]{bochnak1998real}, or polynomial mappings $\C^n \to
+\C^m$ as in~\cite[Chapter~3]{Mumford76}, for which the sets of
+critical values are contained in strict semi-algebraic,
+resp.\ algebraic sets in the codomain. 
+%
+%
+\par 
+The following simple example shows this result at work. 
+%
+%
+\begin{ex}
+Consider a
+squarefree polynomial $f$ in $\C[X_1,X_2]$, with degree at most $d$, defining a smooth curve  $V(f)$ in
+$\C^2$, and let the mapping $\bm\Phi:\C^2\times \C \to \C^2$ be
+defined by 
+\[
+\bm\Phi(X_1,X_2,\Theta) = (f(X_1,X_2), X_1-\Theta). 
+\]
+One checks that the Jacobian of $\bm\Phi$ with respect to
+$(X_1,X_2,\Theta)$ has full rank two at any point in $\bm\Phi^{-1}(\bm 0)$, which is to say that $\bz$ is a regular value of $\bm \Phi$ and therefore the assumptions of the proposition apply. We then deduce that a non-zero polynomial $\Gamma \in \C[\Theta]$ exists, with degree at most $d^{4}$ with the property that, if $\vartheta$ in $\C$ does not cancel $\Gamma$ then $\bz$ is a regular value of the induced mapping $\bm \Phi_{\bm \vt}$. That is, for all $\vartheta$ in $\C$
+except a finite number, the ideal 
+\[
+(f(X_1,X_2), X_1-\vartheta)
+\]
+is
+radical in $\C[X_1,X_2]$; equivalently, $f(\vartheta, X_2)$ is
+squarefree. 
+\par 
+Now, if we take a finite subset $S \subset \C$, then for $\bm \vt \in S$ chosen randomly, independently and uniformly, it then follows by DeMillo-Lipton-Schwartz–Zippel that 
+\[
+\mathbb{P}[\Gamma(\bm \vt) = \bz] \leq \frac{d^4}{|S|}.
+\]
+We will revisit this example in Section~\ref{ssec:fiber} (when proving $H_i^{'}$).
+\end{ex}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Proof of Proposition \ref{prop:weak_t} (weak transversality)}
+%
+The rest of the subsection is devoted to the proof of the proposition.
+The proof of \cite[Theorem B.3]{TWT} already shows the existence of
+$\Gamma$; it is essentially the classical proof for smooth
+mappings~\cite[Section~3.7]{demazure2000bifurcations}, written in an
+algebraic context. In what follows, we revisit this proof,
+establishing a bound on the degree of $\Gamma$.
+
+As mentioned above, Thom’s weak transversality theorem is a generalization of Sard’s Lemma, which states that the set of critical values of a smooth function has measure zero. In Thom’s weak transversality, the bad parameters (for us, the changes of variables that do not give us our desired genericity properties) show up as the critical values of a smooth function. The proof begins by characterizing the critical points of this function.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Characterizing the critical points}
+    Put $V^{'} = \bm\Phi^{-1}(\bm 0) \cap (\sO \times \C^s)$, and let $V$ be the Zariski closure of $V^{'}.$ If $V$ is empty, there is nothing to do, since all values $\thetab$ in $\C^\dt$ satisfy the conclusion of the proposition. We therefore assume that $V$ is not empty. Take $(\xb, \vt)$ in $V^{'}$; then by assumption, $\jac_{(\xb,\vt)}({\bm \Phi})$ has full rank $m$. Since in a neighborhood of $(\xb,\vt), V$ coincides with ${\bm \Phi}^{-1}(0) \cap \sO,$ the Jacobian criterion ~\cite[Corollary 16.20]{ECA} implies that there is a unique irreducible component $V_{(\xb,\vt)}$ of $V$ that contains $(\xb,\vt),$ that $(\xb,\vt)$ is regular on this component, that $\dim V_{(\xb,\vt)}=n+s-m$ and that $T_{(\xb,\vt)}$ is the nullspace of $\jac_{(\xb,\vt)}({\bm \Phi}).$
+    
+    Since every irreducible component of $V$ intersects $V^{'}$, this implies that $V$ itself is equidimensional of dimension $n+s-m$, and thus that $V^{'}$ is contained in $\reg (V)$. Furthermore, it also follows that for $(\xb,\vt) \in V^{'}, T_{(\xb,\vt)}V$ is the nullspace of $\jac_{(\xb,\vt)}(\Phi)$ in $\C^n \times \C^s.$  
+    
+    We will reuse the following fact, proved in~\cite{TWT}.  Consider the
+    projection 
+    %
+    \begin{align*}
+    \pi: \C^{n+\dt} &\rightarrow\C^{\dt} \\
+    (\xb, \thetab)&\mapsto\thetab, 
+    \end{align*}
+    %
+    and let $Z$ be the set of critical points of
+    $\pi_{|V^{'}}$. That is,  \[Z := \{(\xb,\bm \vt) \in V^{'}~|~\dim (\pi(T_{\xb,\bm \vt}V^{'}))<s\}.\] Consider its projection $\pi(Z)$ in $\C^s$. This is
+    the set of critical values of $\pi_{|V^{'}}$. Also let $Z^{'}$ be the critical points of $\pi_{|\reg(V)}$ so that, by the algebraic form
+    of Sard's lemma (see \cite[Theorem~3.7]{Mumford76} for irreducible $V^{'}$
+    and~\cite[Proposition~B.2]{TWT} for general $V^{'}$), its Zariski closure
+    $\overline{\pi(Z^{'})}$ is a strict closed subset of $\C^s$. Then, since $V^{'} \subset \reg(V)$ and since $Z \subset Z^{'},$ the Zariski closure $\overline{\pi(Z)}$ is a strict closed subset of $\C^s$.  As we will
+    see below, if $\thetab \in \C^{\dt}$ is not in $\overline{\pi(Z)}$,
+    then $\bm 0$ is a regular value of $\bm\Phi_{\thetab}$ on $\sO.$
+    
+    To describe the set $Z$ of critical points of $\pi_{|V^{'}}$, let $\bm M$
+    denote the $(s+m) \times (s+n)$ Jacobian matrix with entries in
+    $\C[\Xb,\Thetab]$ given by $\bm M = \jac_{\Xb,\Thetab}(\pi,\bm\Phi)$,
+    that is,
+    \begin{align*}
+    \bm M &= 
+    \bbm 
+    \jac_{\Xb,\Thetab}(\pi)\\
+    \jac_{\Xb,\Thetab}(\bm\Phi) 
+    \ebm 
+    =
+    \bbm 
+    \textbf{0}_{\dt \times n}\hspace{5mm}\textbf{I}_{\dt} \\
+    \jac_{\Xb,\Thetab}(\bm\Phi)
+    \ebm.
+    \end{align*}
+
+    \begin{lemma} 
+      For $(\xb,\thetab)$ in $V^{'}$, $(\xb,\thetab)$ is in $Z$ if and only if
+      the matrix $\bm M$ has rank less than $\dt+m$ at $(\xb,\thetab)$.
+    \end{lemma}
+    \begin{proof}
+      Take $(\xb,\thetab)$ on $V^{'}$, and let $\bm K(\xb,\thetab)$ be the
+      Jacobian matrix $\jac_{\Xb,\Thetab}(\bm\Phi)$ taken at $(\xb,\thetab)$.
+      Then, the rank of $\bm M(\xb,\thetab)$ can be written as
+      $\textup{rank}(\bm K(\xb,\thetab)) + \textup{rank}([\textbf{0}_{\dt
+          \times n}~\textbf{I}_{\dt}] \mid \ker \bm K(\xb,\thetab))$, where
+      the latter is the rank of the restriction of $[\textbf{0}_{\dt
+          \times n}~\textbf{I}_{\dt}]$ to the nullspace of
+      $\bm K(\xb,\thetab)$.
+    
+      Since $(\xb,\thetab) \in V^{'}$ and since $\bz$ is a regular value of $\bm \Phi$, $\bm K(\xb,\thetab)$ has full rank ${\rm codim}
+      (V) = m$. On the other hand, the nullspace of $\bm K(\xb,\thetab)$
+      is the tangent space $T_{\xb,\thetab} V$, and
+      $\textup{rank}([\textbf{0}_{\dt \times n}~\textbf{I}_{\dt}] \mid
+      \ker \bm K(\xb,\thetab))$ is the dimension of $\pi(T_{\xb,\thetab}
+      V)$.  In other words, the rank of $\bm M(\xb,\thetab)$ is equal to
+      $m+\dim(\pi(T_{\xb,\thetab} V))$; this implies the claim in the
+      lemma.
+    \end{proof}
+
+
+
+    Therefore, we can characterize the set $Z$ of critical points of
+    $\pi_{|V}$ as those points satisfying $\bm\Phi(\xb,\thetab)=\bm 0$ and
+    where all minors of $\bm M$ of order $\dt+m$ vanish. We can actually
+    describe this set using a smaller matrix, by discarding certain minors
+    that are identically zero. Let indeed $\bm J$ denote the $m \times n$
+    submatrix of the Jacobian of $\bm\Phi$ consisting of the first $n$
+    columns. This is the Jacobian matrix of $\bm \Phi$ with respect to $\Xb$.
+    \begin{lemma} 
+      For $(\xb,\thetab)$ in $V^{'}$, $(\xb,\thetab)$ is in $Z$ if and only if
+      $\bm J(\xb,\thetab)$ has rank less than $m$.
+    \end{lemma}
+    \begin{proof}
+    Notice 
+    %
+    \begin{align*}
+    M(\xb,\thetab)&= 
+    \bbm 
+    \textbf{0}_{\dt \times n} &\textbf{I}_{\dt} \\
+    \bm J(\xb,\thetab)     &\bm J'(\xb,\thetab)
+    \ebm,
+    \end{align*}
+    where $\bm J'$ consists of the remaining columns of the Jacobian matrix of
+    $\bm\Phi$.  Then, the rank of the former matrix is equal to the rank
+    of
+    \begin{align*}
+    M(\xb,\thetab)&= 
+    \bbm 
+    \textbf{0}_{\dt \times n} &\textbf{I}_{\dt} \\
+    \bm J(\xb,\thetab)     & \bm 0_{m \times s}
+    \ebm,
+    \end{align*}
+    and the conclusion follows.
+    \end{proof}
+\noindent
+    In particular, take $\thetab$ in $\C^\dt - \overline{\pi(Z)}$.
+    Then for all $\xb$ in $\bm \Phi_{\thetab}^{-1}(\bm 0)$ on $\sO$, $(\xb,\thetab)$
+    is in $V^{'}$, so it is not in $Z$. The previous lemma then implies that
+    the Jacobian matrix $\bm J$ of $\bm\Phi_{\thetab}$ has full rank $m$ at
+    $(\xb,\thetab)$. In other words, $\bm 0$ is a regular value of $\bm
+    \Phi_{\thetab}$, as claimed.
+    
+    
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \subsection{Bounding the degree of the set of critical values}
+    %
+    Our next step is to bound the degree of the critical points $Z$, from which we can bound the degree of $\overline{\pi(Z)},$ the Zariski closure of the critical values, and prove Proposition 4.1. To obtain an estimate on the degree of $Z$, rather than
+    considering minors of $\bm J$, we will rewrite the condition that $\bm
+    J(\xb,\thetab)$ has rank less than $m$ as the existence of a
+    non-trivial left kernel element. For this, we once again introduce Lagrangian systems. We let $\textit{\textbf{L}}=(L_1,\hdots,L_m)$ be new
+    variables, thought of as Lagrange multipliers, and consider the
+    ``Lagrange polynomials'' $\mathscr{L}_1,\dots,\mathscr{L}_{n}$, with
+    \[
+    [\mathscr{L}_1 ,\dots, \mathscr{L}_{n}]=\textit{\textbf{L}}\cdot \bm J(\xb,\thetab).
+    \] 
+    Denote by $\frak{Z} \subset \C^{n+\dt+m}$ the algebraic set defined by
+    the vanishing of $\mathscr{L}_1,\hdots,\mathscr{L}_{n},$ and
+    $\bm\Phi$, and by $\frak{Z}'$ the algebraic set
+    \[
+    \frak{Z}' := \overline{\frak{Z} \cap \sO \times \C^s \times \C^n - \{(\xb,\thetab,0,\hdots,0) \in \C^{n+\dt+m}~|~(\xb,\thetab,0\hdots,0) \in \frak{Z}\}},
+    \]
+    where the bar denotes Zariski closure (we have to remove such points,
+    since $L_1=\cdots=L_m=0$ is always a trivial solution to the Lagrange
+    equations). Finally, consider the projection
+    \begin{align*} 
+    \mu :~ \C^{n+\dt+m} &\rightarrow \C^{n+\dt}\\
+    (\xb,\thetab,\bm \ell)~ &\mapsto (\xb,\thetab).
+    \end{align*}
+    \noindent 
+    %
+    \begin{lemma}
+    The critical points $Z$ are contained in $\mu(\frak{Z}').$
+    \end{lemma}
+    %
+    \begin{proof}
+    Take $(\xb,\bm \vt) \in Z.$ Then, there exists $\lb \not = (0,\hdots,0) \in \C^n$ and $\xb \in \sO$, with 
+    \[
+    \lb \cdot \bm J(\xb,\thetab) = \bz.
+    \]
+    Thus, $(\xb,\bm \vt) \in \mu(\frak{Z}')$ so that $Z \subset \mu(\frak{Z}').$
+    \end{proof}
+    %
+    \noindent
+    Let $Y$ be an irreducible component of $\frak{Z}'.$ There exists an open and dense subset $Y^o \subset Y$ such that for all $(\xb,\bm \vt,\lb) \in Y^o,$ $\xb \in \sO$ and $\lb \not = \bz.$ It then follows that 
+    $\mu(Y^o) \subset Z$ and $\mu(\cup_Y Y^o) \subset Z.$ Thence, 
+    \begin{align}
+    \overline{\mu(\cup_Y Y^o)} \subset \overline{Z}.
+    \end{align}
+    Now put $W := \overline{\mu(\fZp)}$.
+    %
+    \begin{lemma}
+    The algebraic set $\overline{\pi(Z)}$ is equal to $\overline{\pi(W)}.$
+    \end{lemma}
+    \begin{proof}
+    Since 
+    \[
+    \overline{\cup_Y Y^o} = \fZp,
+    \]
+    we get 
+    \[
+    W = \overline{\mu(\fZp)} = \overline{\mu(\overline{\cup_Y Y^o})}
+    = \overline{\mu(\cup_Y Y^o)} \subset \overline{Z},
+    \]
+    where the last inclusion follows by (3) above.
+    Hence, by lemma 4.5,
+    \[
+    Z\subset\mu(\frak{Z}')\subset \overline{\mu(\frak{Z}')} = W \subset \overline{Z}.
+    \]
+    Then 
+    \[
+    \pi(Z) \subset \pi(W) \subset \pi(\overline{Z}).
+    \]
+    And thus
+    \[
+    \overline{\pi(Z)} \subset \overline{\pi(W)} \subset \overline{\pi(\overline{Z})} =\overline{\pi(Z)}.
+    \]
+    Therefore,
+    \[
+    \overline{\pi(Z)} = \overline{\pi(W)}.
+    \]
+    \end{proof}
+    %
+    %
+    %
+    %
+    \begin{corollary} 
+      The degree of $\overline{\pi(Z)}$ is at most $d^{m+n}.$
+    \end{corollary}
+    \begin{proof}
+      The algebraic set $\frak Z$ is defined by $m+n$ equations, all of
+      them having degree at most $d$. It follows from B\'ezout's
+      Theorem~\cite{H} that $\deg(\frak{Z}) \leq d^{m+n}$, and the same
+      upper bound holds for $\deg(\frak{Z}')$, since it consists of
+      certain irreducible components of $\frak Z$. Since degree will not increase after projection or closure, 
+      \[
+      \deg (W) = \deg( \overline{\mu(\fZp)}) \leq \deg(\fZp).
+      \]
+      And by Lemma 4.6,
+      \[
+      \deg(\overline{\pi(Z)})
+      =
+      \deg(\overline{\pi(W)})
+      \leq
+      \deg(W).
+      \]
+    \end{proof}
+    \noindent
+    It then suffices to take for $\Gamma$ any
+    non-zero polynomial of degree at most $d^{m+n}$ that vanishes on
+    $\overline{\pi(Z)}$; this proves Proposition~\ref{prop:weak_t}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\chapter{Applications of weak transversality}
+
+
+
+
+
+%----------------------------------------------------------------------
+\section{Applications: the hypersurface case}\label{sec:4.4}
+%----------------------------------------------------------------------
+
+Let $f \in \ZZ[X_1,\hdots,X_n]$ have total degree $d$, with $V(f)
+\subset \C^n$ smooth. 
+
+
+\subsection{Proof of $\textbf{H}_i(1)$}\label{ssec:Hi1}
+
+In what follows, we fix $i$ in $\{1,\dots,n\}$ and
+we prove the following: {\em there exists a non-zero polynomial
+  $\D_{i,1} \in \C[\A]$ of degree at most $2nd^{2n}$ such that if $\mA
+  \in \C^{n\times n}$ does not cancel $\D_{i,1}$, then $\mA$ is
+  invertible and $f^\mA$ satisfies $\textbf{H}_i(1)$.}
+
+The following construction is already in~\cite{BaGiHeMb97}; our
+contribution is the degree estimate. We let $\bm\Phi: \C^n \times
+\C^{n\times n} \to \C^{n-i+1}$ be the mapping defined by the
+polynomials 
+\[
+  \big( f,\,\grad(f)\cdot \A_{i+1},\,\hdots,\, \grad(f)\cdot \A_n \big ),
+\] 
+where $\A_1,\hdots,\A_n$ denote the columns of $\A$ and $\cdot$ is the dot-product.
+\begin{lemma} 
+  $\bz$ is a regular value of $\bm\Phi$.
+\end{lemma}
+\begin{proof}
+Let $(\xb,\mA) \in \C^n \times \C^{n\times n}$ be a zero of $\bm\Phi$.
+We have to show that the Jacobian matrix of the equations defining
+$\bm \Phi$, taken with respect to $\Xb$ and $\A$, has full rank
+$n-i+1$ at $(\xb,\mA)$.
+If we set 
+\[
+F_j = \frac{\pa f}{\pa X_1} A_{i+j,1} + \hdots + \frac{\pa f}{\pa X_n}A_{i+j,n}, ~1 \leq j \leq n-i,
+\]
+this Jacobian matrix is equal to
+{\small \[
+\left[ 
+\begin{array}{cccccc}
+\frac{\pa f}{\pa X_1} \hdots \frac{\pa f}{\pa X_n}             &\hdots& 0 \hdots 0                                         & \hdots & 0\hdots 0 \\ 
+\frac{\pa F_{1}}{\pa X_1}\hdots \frac{\pa F_{1}}{\pa X_n}      &\hdots& \frac{\pa f}{\pa X_1} \hdots \frac{\pa f}{\pa X_n} & \hdots & 0\hdots 0 \\
+\ddots                                                         &\ddots&\ddots                                              & \ddots & \ddots \\
+\frac{\pa F_{n-i}}{\pa X_1}\hdots \frac{\pa F_{n-i}}{\pa X_n}  &\hdots&0 \hdots 0&  \hdots & \frac{\pa f}{\pa X_1} \hdots \frac{\pa f}{\pa X_n}  
+\end{array}
+\right],
+\]}%
+where the first columns are indexed by $X_1,\dots,X_n$ and the further
+ones by \[\A_{1,i+1},\dots,\A_{n,i+1},\dots,\A_{1,n},\dots,\A_{n,n}.\]
+Since $f(\xb)=0$, our assumption on $f$ implies that at least one of
+its partial derivatives is non-zero at $\xb$, and the conclusion
+follows.
+\end{proof}
+\noindent 
+Since all equations defining $\bm \Phi$ have degree at most $d,$ it
+follows by Proposition~\ref{prop:weak_t} that there exists a non-zero
+polynomial $\Gamma_i \in \C[\A]$ of degree at most $d^{2n-i+1}\leq
+d^{2n},$ with the property that, if $\mA \in \C^{n\times n}$ does not
+cancel $\Gamma_i$, then the Jacobian matrix of $$\bm\Phi_\mA=\big(
+f,\,\grad(f)\cdot \mA_{i+1},\,\hdots,\, \grad(f)\cdot \mA_n \big ),$$
+taken with respect to $\Xb$, has full rank $n-i+1$ at all $\xb$ that
+cancels equations. We then define \[\Delta_{i,1}:=\Gamma_i
+\det(\A);\] this is a non-zero polynomial of degree at most $d^{2n}+n
+\le 2nd^{2n}$.
+
+Let us verify that $\Delta_{i,1}$ satisfies the claim in the preamble.
+Take $\mA$ in $\C^{n\times n}$, such that $\Delta_{i,1}(\mA)$ is
+non-zero. Clearly, $\mA$ is invertible; it remains to check that
+$f^\mA$ satisfies $\textbf{H}_i(1)$. Thus, we take $\xb$ that cancels
+\[\left(f^\mA, \frac{\pa f^\mA}{\pa X_{i+1}},\dots,\frac{\pa f^\mA}{\pa X_n}\right)\]
+and we prove that the Jacobian matrix of these equations, taken with
+respect to $\Xb$, has full rank $n-i+1$ at $\xb$. Using the chain
+rule, the equations above can be rewritten as $\bm\Phi_\mA(\mA \xb)$,
+so their Jacobian matrix at $\xb$ has the same rank as that of
+$\bm\Phi_\mA$ at $\mA \xb$, that is, $n-i+1$. Our claim is proved.
+
+In Chapter~\ref{Chap:N}, we will need the following by-product of
+this result: if we consider $f^\A \in \C(\frak
+A_{j,k})[X_1,\dots,X_n]$ as defined Section~\ref{sec:gen}, this
+polynomial satisfies the rank property $\textbf{H}_i(1)$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Proof of $\textbf{H}'_i$}\label{ssec:fiber}
+
+Let $f \in \ZZ[X_1,\hdots,X_n]$ and $i$ be as before. We now assume
+that $f$ satisfies $\textbf{H}_i(1)$, and we prove the following: {\em
+  there exists a non-zero polynomial $\Xi_{i} \in
+  \C[S_1,\dots,S_{i-1}]$ of degree at most $d^{2n}$ such that if $\bm
+  \sigma =(\sigma_1,\dots,\sigma_{i-1})\in \C^{i-1}$ does not cancel
+  $\Xi_{i}$, then for any root $\xb$ of 
+$$\left(X_1-\sigma_1,\dots,X_{i-1}-\sigma_{i-1},f,\frac{\pa f}{\pa
+  X_{i+1}},\dots,\frac{\pa f}{\pa X_n}),$$ the Jacobian matrix of these equations at $\xb$ has full rank $n.$}
+ % the ideal
+ % $$(X_1-\sigma_1,\dots,X_{i-1}-\sigma_{i-1},f, {\pa f}/{\pa
+ %   X_{i+1}},\dots,{\pa f}/{\pa X_n})$$ is radical.}
+
+\smallskip
+
+Let $\bm\Psi: \C^n \times \C^{i-1} \rightarrow \C^{n}$ be the mapping defined by the polynomials
+\[
+  \left(X_1-S_1,\hdots,X_{i-1}-S_{i-1}, f,\frac{\pa f}{\pa X_{i+1}},\hdots,\frac{\pa f}{\pa X_n} \right).
+\]
+%
+\begin{lemma}
+  $\bz$ is a regular value of $\bm\Psi.$
+\end{lemma}
+\begin{proof}
+At all zeros $(\xb,\bm\sigma)$ of $\bm\Psi,$ the Jacobian matrix of
+$\bm\Psi$ has full rank $n$. Indeed, indexing columns 
+by $X_1,\dots,X_n,S_1,\dots,S_{i-1}$, this matrix is equal to
+\[
+\left[ 
+\begin{array}{cc}
+\bI_{i-1}\hspace{7mm} \bz_{(i-1)\times (n-i+1)}&\hspace{-10mm}-\bI_{i-1}\\
+\jac_{\xb}\left(f,\frac{\pa
+  f}{\pa X_{i+1}},\hdots,\frac{\pa f}{\pa X_n}\right)&\bz_{(n-i+1)\times (i-1)}
+\end{array}
+\right].
+\] 
+Since the Jacobian of $f,\pa f/\pa X_{i+1},\hdots,\pa
+  f/\pa X_n$ at $\xb$ is non-zero (by $\textbf{H}_i$), the entire
+matrix must have full rank $n$. Thus,  $\bz$ is a regular value of $\bm\Psi.$
+\end{proof}
+\noindent 
+Since all polynomials defining $\bm\Psi$ have degree at most $d$, it
+follows by Proposition~\ref{prop:weak_t} that there exists a non-zero
+polynomial $\Xi_i$ in $\C[S_1,\dots,S_{i-1}]$ of degree at most
+$d^{2n},$ with the following property:  if $\Xi_i(\bm \sigma)\neq 0$ then at any root $\xb$ of
+\[
+\left(X_1-\sigma_1,\dots,X_{i-1}-\sigma_{i-1},f, \frac{\pa f}{\pa
+  X_{i+1}},\dots,\frac{\pa f}{\pa X_n}\right),
+\] 
+the Jacobian matrix of these
+equations has full rank $n$. Theorem~\ref{theo:Hp} is proved.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%----------------------------------------------------------------------
+\section{Applications: the general case}
+%----------------------------------------------------------------------
+
+
+Let $F=(f_1,\hdots,f_p) \in \ZZ[X_1,\hdots,X_n]^p$ with $\deg(f_i)\leq d$, with $V(F)
+\subset \C^n$ smooth. Recall that $\A$ denotes the matrix of indeterminates with entries $(\frak
+A_{j,k})_{1\le j,k \le n}$ and let $\J_i(\Xb,\A)$ denote the matrix
+    
+    \[
+    \J_i(\Xb,\A) := 
+    \bbm 
+    \jac_{\xb}(F)\\
+    \A_{1,1}~~ \hdots ~~\A_{1,n}\\
+    \vdots\hspace{10mm}\vdots\\
+     \A_{i,1}~~ \hdots ~~\A_{i,n}
+     \ebm.
+    \]
+Consider elements $\bm a \in \C^{in}$ as vectors of length $i$ of the form $\bm a = (\bm a_1,\hdots,\bm a_i)$ with $\bm a_i \in \C^n$. Then for such an $\bm a, \J_i(\Xb,\bm a)$ is naturally defined with the indeterminates evaluated at $\bm a$. We say that $\bm a$ has rank $i$ when $\bm a$ is a sequence of linearly independent vectors. Let $\Phi$ define the polynomial mapping
+    %
+    \begin{align*}
+    \C^{n+p+i}\times \C^{i n} &\rightarrow \C^{p+n}\\
+    (\xb,\bm \lambda,\bm \vt, \bm a)&
+    \mapsto
+    \left(F(\xb),[\lambda_1, ~\cdots~, \lambda_c, \vt_1, ~\cdots~, \vt_i ] \cdot 
+    \J_i(\xb,\bm a)
+    \right)
+    \end{align*}
+    %
+    and $\Phi_{\bm a}$ the induced mapping   
+    %
+    \begin{align*}
+    \C^{n+p+i} &\rightarrow \C^{p+n}\\
+    (\xb,\bm \lambda,\bm \vt)&\mapsto \Phi(\xb,\bm \lambda,\bm \vt,\bm a).
+    \end{align*}
+    %
+    Let $\sA$ be defined by the rank conditions: $\rk (\jac_{\xb}(F))=p$ and $\bm \lambda=(\lambda_1,\hdots,\lambda_p) \not = \bz.$ In \cite[Section 3.2]{BaGiHeSaSh10}, it is shown that, for any $(\xb, \bm \lambda, \vt, \bm a)$ in $\sA$, the Jacobian matrix $\jac_{(\xb, \bm \lambda, \vt, \bm a)}\Phi$ has full rank $p + n$, which in particular holds for $(\xb, \bm \lambda, \vt, \bm a)$ in $\Phi^{-1}(\bz)$ and therefore $\bz$ is a regular value of $\Phi.$ It therefore follows by Proposition \ref{prop:weak_t}, there exists a non-zero polynomial $\Gamma_i \in \C[\A_{1,1},\hdots,\A_{i,n}]$ of degree at most 
+    %
+    \[
+    d^{(n+p+i)+(p+n)} \leq d^{3n+2n} = d^{5n},
+    \]
+    %
+    such that if $\ab \in \C^{i \times n}$ does not cancel $\Gamma_i$, then $\bz$ is a regular value of $\Phi_{\bm a}.$ Thus, for $(\xb, \bm \lambda, \vt) \in \sA \cap \Phi^{-1}_{\bm a}(\bz)$, the jacobian matrix $\jac_{(\xb, \bm \lambda, \vt)}(\Phi_{\bm a})$ has full rank $p+n$.  
+    
+    
+    
+    
+   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \subsection{Application: proof of $\textbf{G}_i(1)$} 
+In what follows, we fix $i$ in $\{1,\dots,n-p+1\}$, and
+    we prove the following: {\em There exists a non-zero polynomial
+    $\D_{i,1} \in \C[\A]$ of degree at most $nd^{5n}$ such that if $\mA
+    \in \C^{n\times n}$ does not cancel $\D_{i,1}$, then $\mA$ is
+    invertible and $F^\mA$ satisfies $\textbf{H}_i(1): \dim W(\pi_i,V(F^{\mA}))=i-1$.}
+    
+    Consider $\bm A \in \C^{n \times n}$ such that the first $i$ rows of $\bm A^{-1}$ do not cancel $\gi$, and let $\bm b$ denote the first $i$ rows of $\bm A^{-1}$. Note that $\bm b$ has full rank $i$. Let $\fB \in \C(\A)-\C$ denote $\A^{-1}$ and let $\fB_1=[\fB_{1,1},\hdots,\fB_{1,n}],\hdots,\fB_n=[\fB_{n,1},\hdots,\fB_{n,n}]$ denote the rows of $\fB.$ Set  
+    \[
+    \Delta_{i,1} := \Gamma_i(\fB_1,\hdots,\fB_i)\cdot (\det \A)^{\deg \gi}. 
+    \]
+    By multiplying through by $(\det \A)^{\deg \gi},$ we cancel all denominators and thus make $\D_{i,1}$ a polynomial. 
+    %
+    \begin{lemma}
+    $\deg \Delta_{i,1} \leq nd^{5n}.$
+    \end{lemma}
+    %
+    \begin{proof}
+        Assume that 
+        \[
+        \fB_{i,j}=\fN_{i,j}/\fD_{i,j},~ \fN_{i,j} \in \C[\A]-\{\C\}.
+        \]
+        Then, $\deg \fN_{i,j} \leq n-1 \leq n,$ and since we have cleared all denominators $\fD_{i,j}$ by multiplying through with $(\det \A)^{\deg \gi},$ we therefore obtain 
+        \[
+        \deg \Delta_{i,1} \leq n\deg \gi \leq nd^{5n}.
+        \]
+    \end{proof}
+    %
+    \noindent
+    Now put 
+    \[
+    Y(\bm a) := \left\{\xb \in V(F)~|~\rk \J_i(\Xb,\bm a) < p+i\right\}.
+    \]
+    %
+    \begin{lemma}
+    For $\mA \in \C^{n \times n}$ with $\Delta_{i,1}(\mA) \not = 0,$ 
+    \[
+    Y^{\mA}(\bm b) = W\left(\pi_i,V\left(F^{\mA}\right)\right).
+    \]
+    \end{lemma}
+    % 
+    \begin{proof}
+    First note that if $\bm A \in \C^{n \times n}$ satisfies
+    \[
+    \Delta_{i,1}(\bm A) = \Gamma_i(b_{1,1},\hdots,b_{i,n})\cdot (\det \bm A)^{d^{5n}}\not = 0, 
+    \]
+    so that
+    \[        
+    \gi(b_{1,1},\hdots,b_{i,n}) \not = 0,
+    \]
+    then we have that, for $(\xb, \bm \lambda, \vt) \in \sA \cap \Phi^{-1}_{\bm b}(\bz)$, the Jacobian matrix 
+    \[
+    \jac_{(\xb, \bm \lambda, \vt)}\Phi_{\bm b} 
+    = \jac_{(\xb, \bm \lambda, \vt)}\left(F(\xb),[\lambda_1, \hdots, \lambda_c \vt_1, \hdots, \vt_i ] \cdot 
+   \J_i(\Xb,\bm b)
+    \right)
+    \]
+    has full rank $p + n$. We then have that
+    \[
+    Y^{\mA}(\bm b) = \left\{\xb \in V\left(F^{\mA}\right)~
+    |~\rk     
+\J_i(\mA \Xb,\bm b)
+     < p+i\right\}.
+    \]
+    Consider the identity $\jac(F^{\mA}) = \jac(F)^{\mA}\mA$ and notice that
+    \[
+    \J_i(\mA\xb,\bm b)
+    =
+    \bbm 
+    \jac_{\xb}(F)^\mA\\
+    \bm b
+     \ebm
+     =
+    \bbm 
+    \jac_{\xb}(F^\mA)\mA^{-1}\\
+    \bbm
+    \bm 1_i ~~~~~ \bm 0
+    \ebm\mA^{-1} 
+     \ebm
+     =
+     \bbm 
+    \jac_{\xb}(F^\mA)\\
+    \jac_{\xb}(\pi_i)
+     \ebm
+    \mA^{-1}
+    \]
+    and therefore 
+    \[
+    \rk \J_i(\mA\xb,\bm b)
+    =
+    \rk
+     \bbm 
+    \jac_{\xb}(F^\mA)\\
+    \jac_{\xb}(\pi_i)
+     \ebm.
+    \]
+    Furthermore, since $V$ is smooth, it follows from \cite[Corollary 16.20]{ECA} that for all $\xb$ in $V, \jac_{\xb}(F)$ has full rank $n - \dim V = n -(n-p) = p ,$ which is a property also established in virtue of the rank conditions on $\sA.$
+    Therefore 
+    %
+    \begin{align*}
+     Y^{\mA}(\bm b) &= \left\{\xb \in V(F^{\mA})~
+    |~\rk \jac_{\xb}(F^{\mA})=p
+    \textrm{ and }
+    \rk     
+    \bbm 
+    \jac_{\xb}(^{\mA})\\
+    \jac_{\xb}(\pi_i)
+     \ebm
+     < p+i\right\} \\
+     &= W\left(\pi_i,V\left(F^A\right)\right). 
+    \end{align*}
+    %
+    \end{proof}
+    %
+    \begin{lemma}
+    $Y(\bm b)$ is the projection of $\sA \cap \Phi^{-1}_{\bm b}(0)$ on the $\Xb$-space.
+    \end{lemma}
+    %
+    \begin{proof}
+    An element $\xb \in V$ belongs to $Y(\bm b)$ if and only if $\rk     
+    \J_i(\Xb,\bm b)
+    < p + i,$
+    which holds if and only if there exists some non zero vector $[\bm \lambda, \bm \vt]$ in the right nullspace. Since $\bm b$ has full rank $i,$ we know that $\bm \lambda \not = 0$.
+    \end{proof}
+    %
+    \begin{lemma}
+    $\dim Y(\bm b) = i-1.$
+    \end{lemma}
+    \begin{proof}
+    \cite[Lemma B.5, Lemma B.11]{TWT}
+    \end{proof}
+    %
+    \noindent
+    It now follows that if $\bm A \in \C^{n \times n}$ with $\Delta_{i,1}(\bm A)\not = 0,$ then $\dim W(\pi_i,V(F^{\mA})) = i-1.$
+    %
+     
+%
+%In Section~\ref{sec:Hi2}, we will need the following by-product of
+%this result: if we consider $f^\A \in \C(\frak
+%A_{j,k})[X_1,\dots,X_n]$ as defined Section~\ref{sec:gen}, this
+%polynomial satisfies the rank property $\textbf{H}_i(1)$.
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Proof of $\textbf{G}_i(2)$}
+
+    Take $\mA \in \C^{n \times n}$ so that $\Delta_{i,1}(\mA) \not = 0$, and again let $\bm b$ denote the first $i$ rows of $\mA^{-1}.$
+    \begin{prop}\label{prop:LagIdeal}
+    At any $(\xb,\lb) \in \WilAnu$, the Jacobian of the polynomials 
+    \[
+    \left(F^{\mA},\lagFA\right)
+    \]
+    has full rank $p+n-i$. 
+    \end{prop}
+    %
+    \begin{proof}
+    Recall from the beginning of Section \ref{sec:5}, that for $(\xb, \bm \lambda, \vt) \in \sA \cap \Phi^{-1}_{\bm b}(\bz)$, the Jacobian matrix of the polynomials 
+    \[
+    \left(F(\xb),[\lambda_1, \hdots, \lambda_c \vt_1, \hdots, \vt_i ] \cdot 
+   \J_i(\xb,\bm b)
+    \right)
+    \]
+    has full rank $p + n$. Recall that 
+    \[
+    \J_i(\mA\xb,\bm b)
+    =
+    \bbm 
+    \jac_{\xb}(F)^\mA\\
+    \bm b
+     \ebm
+     =
+    \bbm 
+    \jac_{\xb}(F^\mA)\mA^{-1}\\
+    \bbm
+    \bm 1_i ~~~~~ \bm 0
+    \ebm\mA^{-1} 
+     \ebm
+     =
+     \bbm 
+    \jac_{\xb}(F^\mA)\\
+    \jac_{\xb}(\pi_i)
+     \ebm
+    \mA^{-1}
+    \]
+    and therefore 
+    \[
+    \rk \J_i(\mA\xb,\bm b)
+    =
+    \rk
+     \bbm 
+    \jac_{\xb}(F^\mA)\\
+    \jac_{\xb}(\pi_i)
+     \ebm.
+    \] 
+    Now, let $L_1, \hdots , L_p$ and $T_1, \hdots , T_i$ be new indeterminants, and consider the Jacobian of the polynomials
+    \[
+    \left(F,[L_1 ~\cdots~ L_p~ T_1 ~\cdots~ T_i ] \cdot 
+    \bbm 
+    \jac(F^{\mA})\\
+    \jac(\pi_i)\\
+    \ebm
+    \right)
+    \]    
+    taken with respect to the variables
+     \[
+    X_1,\dots,X_n,L_1,\hdots,L_p,T_1,\hdots,T_i.
+    \]
+    This Jacobian has full rank $p + n.$ Indeed,
+    %
+    this matrix is equal to 
+    \begin{align*}
+    \left[ 
+    \begin{array}{c|c|c}
+    \jac_{\Xb}(F^{\mA}) & \bz_{p\times p} & \bz_{p\times i}\\
+    \ast \ast \ast & \ast \ast \ast & \bm I_{i}\\
+    \ast \ast \ast & \ast \ast \ast & \bz_{p\times i}
+    \end{array}
+    \right]
+    &=
+    \left[ 
+    \begin{array}{c|c}
+    \jac_{\Xb,\Lb}(F^{\mA}) & \bz_{p\times i}\\
+    \jac_{\Xb,\Lb}\left([\bm L, \bm T ] \cdot 
+    \bbm 
+    \jac_{\Xb}(F^{\mA})\\
+    \jac_{\Xb}(\pi_i)\\
+    \ebm\right) & \bbm \bm I_{i}\\ \bz_{p\times i} \ebm\\
+    \end{array}
+    \right]
+    \\
+    &=
+    \left[ 
+    \begin{array}{c|c}
+    \jac_{\Xb,\Lb}(F^{\mA}) & \bz_{p\times i} \\
+    \ast \ast \ast & I_{i}\\
+    \jac_{\Xb,\Lb}\left(\bm L \cdot \jac_{\Xb}(F^{\mA},i) \right)& \bz_{p\times i}
+    \end{array}
+    \right].
+    \end{align*}
+    %
+    We can therefore see by rearranging blocks that 
+    %
+    \begin{align}
+    \jac_{\Xb, \Lb}\left( F^{\mA},\bm L \cdot \jac_{\Xb}(F^{\mA},i)\right) =
+    \left[ 
+    \begin{array}{c}
+    \jac_{\Xb,\Lb}(F^{\mA}) \\
+    \jac_{\Xb,\Lb}\left(\bm L \cdot \jac_{\Xb}(F^{\mA},i) \right) 
+    \end{array}
+    \right]
+    \end{align}
+    has full rank $p + n-i$. And therefore, at any 
+    \[(\xb,\lb) \in V(\IilAnu)=\WilAnu,\]
+    the Jacobian of the polynomials 
+    \[
+    \left(F^{\mA},\lagFA\right)
+    \]
+    has full rank $p+n-i$. 
+    \end{proof}
+    %
+    \begin{corollary}
+     The ideal defined by $\sI(i,F^{\mA}) = \left(F^{\mA},\lagFA\right)$ is radical.
+    \end{corollary}
+    %
+    \begin{proof}
+    The claim now follows from the Jacobian Criterion~\cite[Corollary 16.20]{ECA}.
+    \end{proof}
+    %
+    \begin{prop}\label{prop:RadLagPolarV}
+     Let $\ub = (u_1,\hdots,u_p) \in \C^p$ be any complex point such that $\udl=1.$ Then, for any $(\xb,\lb)$ in $\mathscr{W}_{\ub}(\pi_i,V(F^{\mA}))$, the Jacobian matrix of the polynomials
+     \[
+  \left( F^{\mA},\lagFA,\udl-1\right) 
+    \]
+ has full rank $p+n-i+1$ at $(\xb,\lb).$ 
+    \end{prop}
+    \begin{proof}
+    By Proposition \ref{prop:LagIdeal}, the Jacobian of the polynomials $\sI(i,F^{\mA}) = (F^{\mA},\lagFA)$ has full rank $p+n-i$; hence, the conclusion holds if $[\bz~|~\ub]$ is not in the row space of the Jacobian matrix of the polynomials
+    \[
+    \left(F^{\mA},\lagFA,\udl -1\right),
+    \]
+    for any $(\xb,\bm l)$ that is a zero. This matrix is equal to
+    \[
+    \left[ 
+    \begin{array}{c|c|c}
+    \frac{\pa f_1^{\mA}}{\pa X_1} \hdots \frac{\pa f_1^{\mA}}{\pa X_n} & \bz_{1\times c} & \bz_{1\times c}\\
+    \ddots & \ddots & \ddots\\
+    \frac{\pa f_c^{\mA}}{\pa X_1} \hdots \frac{\pa f_c^{\mA}}{\pa X_n} & \bz_{1\times c} & \bz_{1\times c}\\
+    \ddots &\jac_{\xb}(F^{\mA},i)^T & \bz_{n-i+1\times c}\\
+    \bz_{1 \times c} & u_1 \hdots u_c & L_1 \hdots L_c 
+    \end{array}
+    \right];
+    \]
+    consider the upper left block
+    \[
+    \left[ 
+    \begin{array}{c|c}
+    A & \bz_{c\times c} \\
+    B & C 
+    \end{array}
+    \right]
+    :=
+    \left[ 
+    \begin{array}{c|c}
+    \frac{\pa f_1^{\mA}}{\pa X_1} \hdots \frac{\pa f_1^{\mA}}{\pa X_n} & \bz_{1\times c} \\
+    \ddots & \ddots \\
+    \frac{\pa f_c^{\mA}}{\pa X_1} \hdots \frac{\pa f_c^{\mA}}{\pa X_n} & \bz_{1\times c} \\
+    \ddots &\jac_{\xb}(F^{\mA},i)^T
+    \end{array}
+    \right],
+    \]
+    and suppose for contradiction that $[\bz~|~\ub]$ is in the row-space of 
+    \[
+    \left[ 
+    \begin{array}{c|c}
+    A & \bz_{c\times c} \\
+    B & C 
+    \end{array}
+    \right].
+    \]
+    Then 
+    \[
+    [\bz~|~\ub]
+    =
+    \lambda [A~|\bz] + \mu[B~|~C]
+    \]
+    and 
+    \[
+    \ub = \mu \cdot C = \mu \cdot \jac_{\xb} (F^{\mA},i)^T
+    \]
+    so that 
+    \[
+    \ub^T = \jac_{\xb} (F^{\mA},i) \cdot \mu^T.
+    \]
+    Now we have a contradiction because, $(\xb,\lb)$ is such that 
+    \begin{align*}
+        &\lb \cdot \jac_{\xb} (F^{\mA},i)=0\\
+        \Rightarrow
+        ~&\lb \cdot \jac_{\xb} (F^{\mA},i) \mu^T= 0\\
+        \Rightarrow
+        ~&~\lb \cdot \ub^T = 0,
+    \end{align*}
+    when by assumption $\lb \cdot \ub^T = 1.$ 
+    \end{proof}
+    %
+    %
+    \begin{prop}\label{prop:polarVs2}
+     Let $\ub = (u_1,\hdots,u_p) \in \C^p$ be any complex point such that $\udl=1.$ Then we have the inclusion
+    \[
+    \sqrt{\frak{I}(i,F^{\mA})} \subset \IilA.
+    \]
+    \end{prop}
+    \begin{proof}
+    First note that $\IiA \subset \IilA.$ Indeed, let $f \in \IiA$ and \[\bm \alpha = (\xb,\lb) \in V(\IilA)=\WilA.\] Then $\sum_{i=1}^p u_i l_i = 1$, so that $\lb \not = (0,\hdots,0)$ is in the left null space and therefore rank $\jac_{\xb} (F,i) < p.$ Therefore all minors are zero at $\xb$ and $f(\bm \alpha)= f(\xb,\lb)=f(\xb)=0,$ so that $f \in \IlA$ and $\IA \subset \IlA.$
+    \par 
+    Now we claim that the ideal defined by the polynomials $\IlA$:
+    \[\left\langle F^{\mA},\lagFA,\udl-1 \right\rangle\] is radical. The claim follows from the Jacobian Criterion~\cite[Corollary 16.20]{ECA}. Therefore 
+    \[
+    \sqrt{\frak{I}(i,F^{\mA})} \subset \sqrt{\IilA} = \IilA.
+    \]
+    \end{proof}
+    %
+    %
+    \begin{corollary}
+    Let $\ub = (u_1,\hdots,u_p) \in \C^p$ be any complex point such that $\udl=1.$ Then, 
+    \[\IilA \cap \C[X_1,\hdots,X_n]
+    =
+    \sqrt{\frak{I}(i,F^{\mA})}.\]
+    \end{corollary}
+    \noindent 
+    \begin{proof}
+    This now follows from Proposition \ref{prop:polarVs1}.
+    \end{proof}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Application: proof of $\textbf{G}_i^{'}$}
+Let $F = (f_1,\hdots,f_p) \in \ZZ[X_1,\hdots,X_n]^p$ and $i$ be as before. We now assume
+that $F$ satisfies $\textbf{H}_i$, and we prove the following: {\em
+  there exists a non-zero polynomial $\Xi_{i} \in
+  \C[S_1,\dots,S_{i-1}]$ of degree at most $d^{3n}$ such that if $
+  \bm \sigma = (\sigma_1,\hdots,\sigma_{i-1}) \in \C^{i-1}$ does not cancel
+  $\Xi_{i}$, then for any $(\xb,\lb) \in \sW(\pi_i,V(F))$, the Jacobian of the system of polynomials
+  $$\left(X_1-\sigma_1,\dots,X_{i-1}-\sigma_{i-1},F,\lagF\right)$$ has full rank $p+n$.}
+
+\smallskip
+
+Let $\bm\Psi: \C^{n+p} \times \C^{p+i-1} \rightarrow \C^{n}$ be the mapping defined by the polynomials
+\[
+  \left(X_1-S_1,\dots,X_{i-1}-S_{i-1},F,\lagF\right).
+\]
+%
+\begin{lemma}
+  $\bz$ is a regular value of $\bm\Psi.$
+\end{lemma}
+\begin{proof}
+At all zeros $(\xb,\lb,\bm \sigma)$ of $\bm\Psi,$ the Jacobian matrix of
+$\bm\Psi$ has full rank $n+p$. Indeed, indexing columns 
+    by 
+    \[
+    X_1,\dots,X_n,L_1,\hdots,L_p,S_1,\dots,S_{i-1},
+    \]
+    this matrix is equal to
+    \[
+    \left[ 
+    \begin{array}{cc}
+    \begin{array}{cc}
+    \bI_{i-1}     & \bz_{(i-1)\times (n+p-i+1)}  
+    \end{array}  &-\bI_{i-1}\\
+    \jac_{(\xb,\bm l)}\left( F,\lb \cdot \jac_{\xb} (F,i)  \right) & \bz_{(p+n-i)\times (i-1)}
+    \end{array}
+    \right].
+    \]
+    By $H_i(2)$, the Jacobian matrix $\jac_{(\xb,\bm l)}\left( F,\lb \cdot \jac_{\xb} (F,i) \right)$ has full rank $p+n-i$. Hence, the entire    
+    matrix must have full rank $p+n$. Thus,  $\bz$ is a regular value of $\bm\Psi.$
+    \end{proof}
+
+Since all polynomials defining $\bm\Psi$ have degree at most $d$, it
+follows by Proposition~\ref{prop:weak_t} that there exists a non-zero
+polynomial $\Xi_i$ in $\C[S_1,\dots,S_{i-1}]$ of degree at most
+$d^{(n+p)+(n)}\leq d^{3n},$ with the following property:  if $\Xi_i(\bm \sigma)\neq 0$ then at any root $(\xb,\lb)$ of
+\[
+\left(X_1-\sigma_1,\dots,X_{i-1}-\sigma_{i-1},F,\lagF\right),
+\] 
+  the Jacobian matrix of these
+equations has full rank $n+p$. Theorem~\ref{theo:Hp} is proved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%======================================================================
+\chapter{Noether Position}\label{Chap:N}
+%======================================================================
+
+
+%----------------------------------------------------------------------
+\section{The hypersurface case: proof of $\textbf{H}_i(2)$}\label{sec:5.2}
+%----------------------------------------------------------------------
+Throughout this section, $f$ and $i \in \{1,\hdots,n\}$ are fixed. We
+prove that there exists a non-zero polynomial $\D_{i}$ in $n^2$
+variables and of degree at most $5n^2(2d)^{2n}$ such that if $\mA$ does
+not cancel $\D_{i}$, then $\mA$ is invertible and satisfies both
+conditions in $\textbf{H}_i$.
+
+Consider again the matrix of indeterminates
+$\A=(\A_{j,k})_{1 \le j,k \le n}$ and the field $\C(\A)$,
+and define $f^{\A} \in \C(\A)[X_1,\dots,X_n]$.  Since $i$ is fixed, to
+simplify notation, let $\I^\A$ denote the following polynomials in
+$\C(\A)[X_1,\dots,X_n]$:
+$$\I(i,f^\A)= \big (f^\A, {\pa f^\A}/{\pa X_{i+1}},\dots,{\pa
+  f^\A}/{\pa X_n} \big ),$$ and let $W^\A$ denote their zero-set,
+that is, $W(\pi_i,V(f^\A)).$ In Section~\ref{ssec:Hi1}, we saw that
+$f^\A$ satisfies $\textbf{H}_i(1)$, so that $\I^\A$ defines a
+radical ideal, and $W^\A$ is equidimensional of dimension $i-1$. We
+now point out that $f^\A$ also satisfies $\textbf{H}_i(2)$.
+
+
+\begin{lemma} 
+ The extension $$\C(\A)[X_1,\dots,X_{i-1}]\rightarrow
+ \C(\A)[X_1,\dots,X_n]/\I^{\A}$$ is integral.
+\end{lemma}
+\begin{proof}
+  Let $(\fp_\ell)_{1 \le \ell \leq L}$ be the prime components of
+  the radical ideal $\I^\A$. By \cite[Proposition 1]{EMP}, for all
+  $\ell$,
+  \[
+    \C(\A)[X_1,\dots,X_{i-1}]\rightarrow\C(\A)[X_1,\dots,X_n]/\fp_\ell
+  \] 
+  is integral. Therefore polynomials
+  $q_{\ell,j}\in\C(\A)[X_1,\dots,X_{i-1},X_j]$ exist, all monic in
+  $X_j$, with $q_{\ell,j}(X_j)\in \fp_\ell$ for each $j$ in
+  $\{i,\hdots,n\}.$ Thence, $ Q_{j} := \prod_{1 \le \ell\le L}
+  q_{\ell,j}$ is monic in $X_j$ and satisfies $ Q_{j} \in \I^\A$, for
+  each $j \in \{i,\hdots,n\}.$ This proves our claim.
+\end{proof}
+
+\noindent
+If $P$ is any polynomial in $\C(\frak A)[X_1,\dots,X_n]$, we will let
+$D \in \C[\frak A]$ be the minimal common denominator of all its
+coefficients, and we will write $\overline P := D P$, so that
+$\overline P$ is in $\C[\A,X_1,\dots,X_n]$.
+
+
+\begin{lemma} 
+  For $j=i,\dots,n$, there exists a polynomial $P_j$ in
+  $\C(\A)[X_1,\dots,X_{i-1},X_j]$, monic in $X_j$, with $\pjb$ in
+  $\I^\A$, and such that $\deg(\pjb)\leq (2d)^{n}.$
+\end{lemma} 
+\begin{proof}
+  We let $\frak L^\A$ denote the extension of $\I^\A$ given by $\frak
+  L^\A:=\I^\A\cdot \C(\frak A, X_1,\dots,X_{i-1})[X_i,\dots,X_n]$. Then,
+  \begin{equation}\label{eq:1}
+    \C(\frak A, X_1,\dots,X_{i-1}) \to \C(\frak A,
+    X_1,\dots,X_{i-1})[X_i,\dots,X_n]/\frak L^\A
+  \end{equation}
+  is an algebraic extension. On the other hand, 
+  the previous lemma states that 
+  \begin{equation}\label{eq:2}
+    \C(\A)[X_1,\dots,X_{i-1}]\rightarrow
+    \C(\A)[X_1,\dots,X_n]/\I^{\A}  
+  \end{equation}
+  is integral; from this, Proposition~3.3.1 in~\cite{GiHeSa93} implies
+  that it is actually a free module. Any basis of the latter is also a
+  basis of~\eqref{eq:1}; as a consequence, for $j$ in $i,\dots,n$, the
+  characteristic polynomials of $X_j$ in~\eqref{eq:1} or~\eqref{eq:2}
+  are the same. Let $P_j$ be the minimal polynomial of $X_j$
+  in~\eqref{eq:1}. The previous discussion implies that the
+  characteristic polynomial $\chi_j$ of $X_j$ in~\eqref{eq:1}, and
+  thus also $P_j$, are in $\C(\A)[X_1,\dots,X_{i-1},X_j]$ and monic in
+  $X_j$.
+
+  By definition, $\chi_{j}$ is in $\frak I^\A$ and since there exists
+  an integer $k$ such that $\chi_j$ divides $P_j{}^k$ in
+  $\C(\A)[X_1,\dots,X_{i-1}][X_j]$, $P_j{}^k$ is in $\frak
+  I^\A$. Since the latter ideal is radical, we conclude that $P_{j}$
+  is in $\frak I^\A$. This implies that $\pjb$ is in $\frak I^\A$ as
+  well.
+
+  Now, consider the polynomials $f^\A, {\pa f^\A}/{\pa
+    X_{i+1}}, \dots, {\pa f^\A}/{\pa X_n}$ in $\C[\A,X_1,\dots,X_n]$,
+  let $\frak W$ be their zero-set, and let $\deg(\frak W)$ be its
+  degree, in the sense of~\cite{H}. Proposition~1 in~\cite{CGR}
+  implies that $\pjb$ has degree at most $\deg(\frak W)$. Since all
+  polynomials defining $\frak W$, seen in $\C[\A,X_1,\dots,X_n]$, have
+  degree at most $2d$, the B\'ezout inequality of~\cite{H} gives
+  $\deg(\pjb) \le (2d)^{n-i+1} \le (2d)^n$.
+\end{proof}
+
+Our next step is to give degree bounds on the coefficients appearing
+in the membership equality $\pjb \in\I^\A$. This is done using
+Rabinovicz's trick. Let $T$ be a new variable; applying the
+Nullstellensatz in $\C(\A)[X_1,\dots,X_n,T]$, and clearing
+denominators, we obtain the existence of $\alpha_j$ in
+$\C[\A]-\{0\}$ and $ C_{j,\ell},B_j$ in
+$\C[\A][X_1,\dots,X_n][T]$, such that
+%
+\begin{align}\label{eq:nullst}
+\alpha_j = \sum_{\ell=1}^{n-i+1} C_{j,\ell} G_\ell + B_j (1-\pjb T),\ \  G_\ell \in 
+\left\{ 
+f^\A,\frac{\partial f^\A}{\partial X_{i+1}},\hdots,\frac{\partial f^\A}{\partial X_n}
+\right\}.
+\end{align}
+%
+Let us then define 
+$$\D_{i}:=\D_{i,1} \alpha_i \cdots \alpha_n D_i \cdots D_n,$$ where
+$\D_{i,1}$ was defined in Section~\ref{ssec:Hi1} and for all $j$,
+$\alpha_j$ is as above and $D_j$ is the leading coefficient of $\pjb$
+with respect to $X_j$. Thus, $\D_{i}$ is a non-zero polynomial in
+$\C[\A]$; we will estimate its degree below.
+
+\begin{lemma}
+  Suppose that $\mA \in \C^{n\times n}$ does not cancel $\D_{i}$. Then
+  $f^\mA$ satisfies ${\bf H}_i$.
+\end{lemma}
+\begin{proof}
+  By assumption, $\D_{i,1}(\mA)$ is non-zero, so that $\mA$ is
+  invertible and $f^\mA$ satisfies ${\bf H}_i(1)$. In particular, the
+  ideal $\I(i, f^\mA)$ is radical, and its zero-set
+  $W(\pi_i,V(f^\mA))$ is either empty or $(i-1)$-equidimensional. If
+  it is empty, we are done.
+
+  Otherwise, for $j=i,\dots,n$, evaluate all indeterminates in $\A$ at the
+  corresponding entries of $\mA$ in~\eqref{eq:nullst}. This gives us
+  an equality in $\C[X_1,\dots,X_n,T]$ of the form
+  \begin{align*}
+    a_j = \sum_{\ell=1}^{n-i+1} c_{j,\ell} g_\ell + b_j (1-p_j T),\ \  g_\ell \in 
+    \left\{ 
+      f^\mA,\frac{\partial f^\mA}{\partial X_{i+1}},\hdots,\frac{\partial f^\mA}{\partial X_n}
+    \right\},
+  \end{align*}
+  for $a_j$ in $\C$, polynomials $c_{j,\ell}$ and $b_j$ in
+  $\C[X_1,\dots,X_n,T]$ and $p_j$ in
+  $\C[X_1,\dots,X_{i-1},X_j]$. Since neither $\alpha_j$ nor $D_j$
+  vanish at $\mA$, $a_j$ is non-zero and the leading coefficient of
+  $p_j$ in $X_j$ is a non-zero constant.
+
+  The conclusion is now routine. Replace $T$ by $1/p_j$ in the
+  previous equality; after clearing denominators, this gives a
+  membership equality of the form $p_j{}^k \in \I(i, f^\mA)$, for some
+  integer $k \ge 1$ (we cannot have $k=0$, since we assumed that
+  $W(\pi_i,V(f^\mA))$ is not empty). Since $\I(i, f^\mA)$ is radical,
+  $p_j$ is in $\I(i, f^\mA)$. Repeating this for all $j$ proves that 
+  $\C[X_1,\dots,X_{i-1}]\rightarrow\C[X_1,\dots,X_n]/\I(i, f^\mA)$
+  is integral.
+\end{proof}
+
+To estimate the degree of $\D_{i}$, what remains is to give an upper
+bound on the degree of $\alpha_i,\dots,\alpha_n$. This will come as an
+application of the effective Nullstellensatz given in~\cite{EN}, for
+which we first need to determine degree bounds, separately in $\Xb,T$
+and $\A,$ of the polynomials in the membership relationship:
+\begin{align*}
+\deg_{\Xb,T}\left\{ 
+f^\A,\frac{\partial f^\A}{\partial X_{i+1}},\hdots,\frac{\partial f^\A}{\partial X_n}
+\right\}&\leq d;\\
+\deg_{\A}  
+\left\{ 
+f^\A,\frac{\partial f^\A}{\partial X_{i+1}},\hdots,\frac{\partial f^\A}{\partial X_n}
+\right\}& \leq d;\\
+\deg_{\Xb,T}(1-T\pjb) &\leq (2d)^n +1;\\
+\deg_{\A}(1-T\pjb)& \leq (2d)^n.
+\end{align*}
+For each $j \in \{i,\hdots,n\},$ a direct application of \cite[Theorem
+0.5]{EN}, gives $\deg(\alpha_j) \le (n+1)d^n((2d)^n+1)$; we will use
+the slightly less precise bound $\deg(\alpha_j) \le 2n(2d)^{2n}$.
+
+
+We saw in Section~\ref{ssec:Hi1} that $\D_{i,1}$ has degree at most
+$2nd^{2n}$, and all $D_j$'s have degree at most $(2d)^n$. This gives
+the upper bound
+$$\deg(\D_i) \le 2nd^{2n} + 2n^2(2d)^{2n} + n(2d)^n \le 5n^2 (2d)^{2n}.$$
+This completes the proof of Theorem~\ref{theo:mainG}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%----------------------------------------------------------------------
+\section{The general case: proof of $\textbf{G}_i(3)$}
+%----------------------------------------------------------------------
+Throughout this section, $F = (f_1,\hdots,f_p)$ in $\C[X_1,\hdots,X_n]$ and $i$ in $\{1,\hdots,n-p+1\}$ are fixed. We prove that there exists a non-zero polynomial $\D_{i}$ in $\C[\A]$ of degree at most $6n^2(2d)^{5n}$ such that if $\mA$ does not cancel $\D_{i}$, then $F^{\mA}$ satisfies  $\textbf{H}_i$.
+
+Consider again the $n\times n$ matrix of indeterminates
+$\A=(\A_{j,k})_{1 \le j,k \le n}$ and the field $\C(\A)$,
+and define $F^{\A}=(f_1^{\A},\hdots,f_p^{\A})$  as $(f_1(\A\Xb),\hdots,f_p(\A\Xb))$ in $\C(\A)[\Xb]^p$.  Since $i$ is fixed, to
+simplify notation, let $\I^\A$ denote the polynomials $\I(i,F^\A)= \big (F^\A, \minorsfA \big )$ in
+$\C(\A)[\Xb]$, and let $\Il^\A$ denote the polynomials $\IilfA= \big (F^\A, \bm L \cdot \jac_{\xb}(F^\A,i),\ub^T\cdot\Lb-1 \big )$ in
+$\C(\A)[\Xb,\Lb]$. Let $W^\A$ denote  $W(\pi_i,V(F^\A))$ and let $\Wl^\A$ denote  $\WilfA$. 
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Degree bounds of the integral dependence relationship} 
+%
+\begin{lemma}\label{lem:6.1}
+ The extension $$\C(\A)[\Xb_{\leq i-1}]\rightarrow
+ \C(\A)[\Xb]/\IifAr$$ is integral.
+\end{lemma}
+%
+\begin{proof}
+  Let $(\fp_\ell)_{1 \le \ell \leq L}$ be the prime components of
+  the $\IifAr$. By \cite[Proposition 1]{EMP}, for all
+  $\ell$,
+  \[
+    \C(\A)[\textbf{X}_{\leq i-1}]\rightarrow\C(\A)[\Xb]/\fp_\ell
+  \] 
+  is integral. Therefore polynomials
+  $q_{\ell,j}\in\C(\A)[\textbf{X}_{\leq i-1},X_j]$ exist, all monic in
+  $X_j$, with $q_{\ell,j}(X_j)\in \fp_\ell$ for each $j$ in
+  $\{i,\hdots,n-p+1\}.$ Thence, $ Q_{j} := \prod_{1 \le \ell\le L}
+  q_{\ell,j}$ is monic in $X_j$ and satisfies $ Q_{j} \in \sqrt{\I^\A}$, for
+  each $j \in \{i,\hdots,n-p+1\}.$ This proves our claim.
+\end{proof}
+%
+\begin{corollary}\label{lem:6.2}
+ The extension $$\C(\A)[\Xb_{\leq i-1}]\rightarrow
+ \C(\A)[\Xb]/(\Iil^{\A} \cap \C(\A)[\Xb])$$ is integral.
+\end{corollary}
+%
+\begin{proof}
+By Lemma \ref{lem:6.1}, polynomials
+  $P_{j}\in\C(\A)[\Xb_{\leq i-1},X_j]$ exist, all monic in
+  $X_j$, with $P_{j}(X_j)\in \IifAr$ for each $j$ in
+  $\{i,\hdots,n-p+1\}.$ By Proposition \ref{prop:polarVs2}, 
+  \[
+  \sqrt{\IifA} \subset \IilfA,
+  \]
+  and therefore $P_{j}(X_j)\in \IilfA$ for each $j$ in 
+  $\{i,\hdots,n-p+1\}$ and 
+  \[
+  \C(\A)[\Xb_{\leq i-1}]\rightarrow
+ \C(\A)[\Xb]/(\IilfA \cap \C(\A)[\Xb])
+  \]
+ is integral.
+\end{proof}
+%
+%\noindent
+If $P$ is any polynomial in $\C(\frak A)[\Xb]$, we will let
+$D \in \C[\frak A]$ be the minimal common denominator of all its
+coefficients, and we will write $\overline P := D P$, so that
+$\overline P$ is in $\C[\A,\Xb]$.
+
+
+    \begin{lemma} 
+    For each $j \in \{i,\dots,n-p+1\}$, there exists $P_j$ in $
+    \C(\A)[\Xb_{\leq i-1},X_j]$, monic in $X_j$, with $\pjb$ in
+    $\IilfA$, and such that $\deg(\pjb)\leq (2d)^{2n}.$
+    \end{lemma} 
+
+\begin{proof}
+     We let $\frak L^\A$ denote the extension of $\IilfA \cap \C(\A)[\Xb]$ given by 
+  \[
+  \frak
+  L^\A =(\IilfA \cap \C(\A)[\Xb])\cdot \C(\frak A, \Xb_{\leq i-1})[X_i,\dots,X_n].
+  \]
+  Then,
+  \begin{equation}\label{eq:1}
+    \C(\frak A, \Xb_{\leq i-1}) \to \C(\frak A,
+    \Xb_{\leq i-1})[X_i,\dots,X_n]/\frak L^\A
+  \end{equation}
+    is an algebraic extension. Let $P_j \in \C(\A)(\textbf{X}_{\leq i-1})[X_j]$ be the minimal polynomial of $X_j$ in \eqref{eq:1}}, and note that $P_j$ is monic in $X_j.$ By Corollary \ref{lem:6.2}, $Q_j\in\C(\A)[\textbf{X}_{\leq i-1},X_j],$ exists, monic in $X_j$, with 
+    \[
+    Q_j(X_j) \in \IilfA \cap \C(\A)[\Xb].
+    \]
+    Hence, $Q_j$ is also in the extension $\frak{L}^\A$, and thus $P_j$ divides $Q_j$ in $\C(\A)(\textbf{X}_{\leq i-1})[X_j].$ We can therefore write 
+    \begin{align*}
+    &Q_j = P_jR_j,~~~~ P_j,R_j \in \C(\A)(\textbf{X}_{\leq i-1})[X_j]-\C(\A)(\textbf{X}_{\leq i-1}).
+    \end{align*}
+    It then follows by Gauss's lemma that 
+    \begin{align*}
+    Q_j = p_jr_j, ~~~~p_j,r_j \in \C(\A)[\textbf{X}_{\leq i-1}][X_j]-\C(\A),
+    \end{align*}
+    and such that $\mu_j \in \C(\A)(\Xb_{\leq i-1})$ exists with 
+    \[
+    P_j = \mu_j p_j,~~~~ R_j = \mu_j^{-1}r_j.
+    \]
+    Since $Q_j$ is monic in $X_j$, $p_j$ and $r_j$ must also be monic in $X_j$, and $\mu_j$ must be the coefficient of the highest degree term of $P_j$ in $X_j.$ Since $P_j$ is monic in $X_j$, $\mu_j =1$ and hence $P_j=1\cdot p_j=p_j \in \C(\A)[\textbf{X}_{\leq i-1}][X_j].$
+
+  Now, consider the polynomials
+  \[
+\IilfA := \left(F^{\A}, \lagFfA,\udl-1 \right)
+\]
+in $\C[\A,\Xb,\Lb]$, let $\frak W$ be their zero-set, and let $\deg(\frak W)$ be its
+  degree, in the sense of~\cite{H}. Proposition~1 in~\cite{CGR}
+  implies that $\pjb$ has degree at most $\deg(\frak W)$. Since all
+  polynomials defining $\frak W$, seen in $\C[\A,\Xb,\Lb]$, have
+  degree at most $2d$, the B\'ezout inequality of~\cite{H} gives
+  $\deg(\pjb) \le (2d)^{p+n-i+1} \le (2d)^{2n}$.
+\end{proof}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Applying the effective Nullstellensatz}
+Now we apply the Nullstellensatz for $\pjb$ with the ideal membership for $\IilfA.$ Let $T$ be a new variable; applying the
+Nullstellensatz in $\C(\A)[\Xb,\Lb][T]$, and clearing
+denominators, we obtain the existence of $\alpha_j$ in
+$\C[\A]-\{0\}$ and $ C_{j,\ell},B_j$ in
+$\C[\A][\Xb,\Lb][T]$, such that
+\begin{align*}
+\alpha_j = \sum_{\ell=1}^{p+n-i+1} C_{j,\ell} G_\ell + B_j (1-\pjb T),\\  G_\ell \in 
+\left\{ 
+F^\A,\lagFfA, \udl-1
+\right\}.
+\end{align*}
+Let us then define 
+$$\D_{i}:=\D_{i,1} \alpha_i \cdots \alpha_n D_i \cdots D_n.$$
+
+\begin{lemma}\label{lem:6.4}
+Suppose that $\mA \in \C^{n\times n}$ does not cancel $\D_{i}$. Then $F^A$ satisfies $H_i(1)$ and $H_i(2),$ and the extension
+\[
+ \C[\Xb_{\leq i-1}]\rightarrow \C[\Xb]/(\IilA \cap \C[\Xb])
+\]
+is integral.
+\end{lemma}
+
+\begin{proof}
+By assumption, $\D_{i,1}(\mA)$ is non-zero so that $\mA$ is
+invertible, the
+ideal defined by $\IilA$ is radical, and 
+$\WiA$ is either empty or $(i-1)$-equidimensional. And by Proposition \ref{prop:RadLagPolarV} and the Jacobian Criterion~\cite[Corollary 16.20]{ECA}, $\WilA$ is also either empty or $(i-1)$-equidimensional. If
+it is empty, we are done. Otherwise, for $j=i,\dots,n-p+1$, evaluate all indeterminates in $\A$ at the
+corresponding entries of $\mA$. This gives us
+an equality in $\C[\Xb,\Lb,T]$ of the form
+\begin{align*}
+a_j = \sum_{\ell=1}^{p+n-i+1} c_{j,\ell} g_\ell + b_j (1-p_j T),\ \  g_\ell \in 
+\left\{ 
+F^{\mA}, \lagFA, \udl-1
+\right\},
+\end{align*}
+for $a_j$ in $\C$, polynomials $c_{j,\ell}$ and $b_j$ in
+$\C[\Xb,\Lb,T]$ and $p_j$ in
+$\C[\Xb_{\leq i-1},X_j]$. Since neither $\alpha_j$ nor $D_j$
+vanish at $\mA$, $a_j$ is non-zero and the leading coefficient of
+$p_j$ in $X_j$ is a non-zero constant.
+
+The conclusion is now routine. Replace $T$ by $1/p_j$ in the
+previous equality; after clearing denominators, this gives a
+membership equality of the form 
+\[
+p_j{}^k \in \IilA \cap \C[\Xb],
+\]
+for some integer $k \ge 1$ (we cannot have $k=0$, since we assumed that $\WiA$ is not empty, which implies that $\WilA$ is not empty). Since $\IilA$ is radical,
+$p_j$ is in $\IilA$. Repeating this for all $j$ proves that 
+\[
+\C[\Xb_{\leq i-1}]\rightarrow\C[\Xb]/(\IilA \cap \C[\Xb])
+\]
+is integral.
+\end{proof}
+
+\noindent
+To estimate the degree of $\D_{i}$, what remains is to give an upper
+bound on the degrees of $\alpha_i,\dots,\alpha_n$. This will come as an
+application of the effective Nullstellensatz given in~\cite{EN}, for
+which we first need to determine degree bounds, separately in $\Xb,\Lb,T$
+and $\A,$ of the polynomials in the membership relationship. We have
+\begin{align*}
+\deg_{\Xb,\Lb,T}
+\left\{ 
+F^{\A},\lagFfA, \udl-1
+\right\}
+\leq d, ~
+\deg_{\Xb,\Lb,T}(1-T\pjb) \leq (2d)^{2n} +1, 
+\end{align*}
+and we have 
+\begin{align*}
+\deg_{\A}  
+\left\{ 
+F^{\A},\lagFfA, \udl-1
+\right\} 
+\leq d,~\textrm{and }
+\deg_{\A}(1-T\pjb)& \leq (2d)^{2n}.
+\end{align*}
+For each $j \in \{i,\hdots,n-p+1\},$ a direct application of \cite[Theorem
+0.5]{EN}, gives 
+\[
+\deg(\alpha_j) \le (2n+2)d^{2n+1}((2d)^{2n}+1);
+\]
+we will use
+the slightly less precise bound $\deg(\alpha_j) \le 4n(2d)^{4n}$. Since $\D_{i,1}$ has degree at most
+$nd^{5n}$ and all $D_j$'s have degree at most $(2d)^{2n}$, this gives
+the upper bound
+$$\deg(\D_i) \le nd^{5n} +  4n^2(2d)^{4n} + n(2d)^{2n} \leq 6n^2(2d)^{5n}.$$
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Proof of $\textbf{H}_i(3)$}
+Now it remains to show that if $\mA \in \C^{n\times n}$ does not cancel $\D_{i}$ then
+\[
+ \C[\Xb_{\leq i-1}]\rightarrow \C[\Xb]/\IiA
+\]
+is integral. 
+\noindent
+By Lemma \ref{lem:6.4}, the extension
+\[
+ \C[\Xb_{\leq i-1}]\rightarrow \C[\Xb]/(\IilA \cap \C[\Xb])
+\]
+is integral, and thus polynomials 
+\[
+Q_j \in \C[\Xb_{\leq i-1},T]
+\]
+exists, monic in $T$, for each $j \in \{i,\hdots,n-p+1\},$ with
+\begin{align*}
+Q_j(X_1,\hdots,X_{i-1},X_j) \in \IilA \cap \C[\Xb].
+\end{align*}
+%
+By Proposition~\ref{prop:polarVs1}, $Q_j \in \IiAr.$ Hence, there exists some $k \in \mathbb{N}-\{0\}$ with $Q_j^{k} \in\IiA$, where $Q_j^k$ is monic in $X_j,$ and therefore
+\[
+ \C[\Xb_{\leq i-1}]\rightarrow \C[\Xb]/\IiA
+\]
+is integral.
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%======================================================================
+\chapter{Analysis of algorithms}\label{Chap:AnalysisofAlgorithms}
+%======================================================================
+
+
+The following are our main algorithms; they expand on the sketches given in
+the introduction, by quantifying the various random choices.
+
+In each algorithm, we use \cite[Algorithm 2]{SH} to solve a square
+system. This subroutine is randomized; in order to guarantee a higher probability of success, we repeat the calculation $k$ times, for a well-chosen parameter $k$. That latter reference establishes that by repeating the calculation $k$ times, and keeping the output of highest degree among those $k$ results, we succeed with probability at least $1-(1/2)^k$. When Algorithm 2 does not succeed, it either returns a proper subset of the solutions, or FAIL. Note that Algorithm 2 is shown to succeed in a single run with  probability at least $1-11/32,$ and we bound the probability of success with $1-1/2$ for simplicity. 
+
+
+%----------------------------------------------------------------------
+\section{The compact hypersurface case}
+%----------------------------------------------------------------------
+\subsection{Pseudocode}
+
+
+\begin{algorithm}[!h]
+\KwIn{$f \in \ZZ[X_1,\hdots,X_n]$ of degree at most $d$ and height at most $b$ with $V(f) \subset \C^n$ smooth and compact, and $0 < \epsilon < 1$}
+\KwOut{a zero-dimensional parameterization that
+  includes at least one point in each connected component of $V(f)\cap \R^n$, with probability of success at least $1-\epsilon$. } 
+
+\nl Construct $S := \{1,2,\hdots,\lceil 2\epsilon^{-1}5n^3(2d)^{2n} \rceil\}$ and randomly choose $\mA \in
+S^{n^2}$\; 
+
+\caption{{CompactHypersurfaceCase} \label{}} 
+
+
+ \nl Build a straight-line program $\Gamma_i$ that computes the 
+ equations
+  $$\left\{f^{\mA},\frac{\pa
+    f^{\mA}}{\pa X_{2}},\hdots,\frac{\pa f^{\mA}}{\pa X_n} \right\}\;$$
+ 
+  \nl Run \cite[Algorithm 2]{SH} $k \geq \lg(1/\epsilon)+1$ times
+  with input $\Gamma_i$\;
+
+\nl  \Return the highest cardinality
+  zero-dimensional parameterization from step 3.
+\end{algorithm}
+%
+%
+%
+Algorithm 1 requires that the input system be given by a
+straight-line program. We build it (at Step 2) in the straightforward
+manner already suggested in the introduction: given $f$, we can build
+a straight-line program that evaluates $f$ in $O(d^n)$ operations, by
+computing all monomials of degree up to $d$, multiplying them by the
+corresponding coefficients in $f$, and adding results. To obtain a
+straight-line program for $f^\mA$, we add $O(n^2)$ steps corresponding
+to the application of the change of variables $\mA$. From this, we can
+compute the required partial derivatives of $f^\mA$ for the same asymptotic
+cost~\cite{BaSt83};  this gives $\Gamma_i$.
+\par 
+If $f^\mA$ satisfies ${\bf H}_i$ for all $i$, then
+Theorem~2 in~\cite{EMP} establishes correctness.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Bit operation cost}
+The following lists the costs for each step of Algorithm 1:
+\begin{enumerate}
+    \item We defined $S := \left\{1,2,\hdots,\lceil 2\epsilon^{-1}5n^3(2d)^{2n} \rceil \right\}$
+      and therefore the height of any $a_{i,j} \in S$ is at most
+    \[
+    \log 2/{\epsilon} + \log(5n^3(2d)^{2n}) \in O^{\sim}(\log 1/{\epsilon} + n\log d).
+    \]
+    \item 
+    After computing the partial derivatives, the height grows by at
+    most another factor of $\log d$. Thus, all polynomials in the
+    system considered at Step 3 have height 
+    \[ 
+    O^{\sim}(b + d\log 1 /
+    \epsilon + dn). 
+    \] 
+    All integer coefficients appearing in $\Gamma_i$ satisfy the same bound.    
+    %% Furthermore, preparing the
+    %% straight line program for the gradient of $f$ does not introduce
+    %% large integers. The integers in $\grad (f)$ are of the same
+    %% magnitude as in $\Gamma$.
+    \item As a result, after applying \cite[Algorithm 2]{SH} $k =O(\log(1/\epsilon))$ times,
+      the total boolean cost of the algorithm is
+      \[
+      O^{\sim}(d^{3n+1}(\log1/\epsilon)(b + \log1/\epsilon))
+      \]
+      where the polynomials in the output have degree at most $d^n,$ and height at most
+      \[
+      O^{\sim}(d^{n+1}(b + \log 1 / \epsilon)).
+  \]
+\end{enumerate}
+\noindent 
+This proves the runtime estimate, as well as our bounds on the height
+of the output.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Probability of success}
+Let $\Delta_i \in \C[\A]$ be the polynomials from
+Theorem~\ref{theo:H}. Put $\Delta := \prod_{i=1}^n \D_i$ and
+note that
+\begin{align}
+    \deg \Delta \leq \sum_{i=1}^n \deg \Delta_i \leq 5n^3(2d)^{2n}.
+\end{align}
+If $\mA \in \C^{n \times n}$ does not cancel $\Delta,$ then $\mA$ is
+invertible and $f^\mA$ satisfies $\textbf{H}_i$ for all $i \in
+\{1,\hdots,n\}.$ As we argued above, the algorithm is guaranteed to
+succeed, as long as our call to Algorithm 2 in~\cite{SH} succeeds. Now, by construction of
+\[
+S := \left\{1,2,\hdots,\lceil 2\epsilon^{-1}5n^3(2d)^{2n}\rceil \right\}
+\] 
+where $\mA \in S^{n^2}$ is randomly chosen, we have 
+%
+\[
+\pr[\Delta(\mA)=0] \leq  \frac{\deg\Delta}{|S|} = \epsilon/2.
+\]
+Let $\mathscr{E}$ be the event that the parameterization returned in step 4 of
+Algorithm~1 are correct. Then, the probability of success is at least
+\begin{align*}
+ \pr[\Delta(\mA)\ne 0] \times \pr[\mathscr{E}~|~
+   \Delta(\mA) \ne 0].
+\end{align*}
+Set $k = \lg(2/\epsilon)+1$ so that 
+\[
+1-2^{-k} \geq 1-\epsilon/2,
+\]
+and therefore 
+\begin{align*}
+\pr[\textrm{success}] &\geq (1- \epsilon/2)\pr[\mathscr{E}~|~   \Delta(\mA) \ne 0]\\ 
+& \geq (1- \epsilon/2)(1-2^{-k}) \\ 
+& \geq (1- \epsilon/2)(1- \epsilon/2)\\ 
+& \geq 1 - \epsilon.
+\end{align*}
+This finishes the proof of theorem \ref{theo:mainCH}.
+
+
+
+%----------------------------------------------------------------------
+\section{The hypersurface case}
+%----------------------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Pseudocode}
+%
+%
+%
+\newpage 
+\begin{algorithm}[!h]
+\KwIn{$f \in \ZZ[X_1,\hdots,X_n]$ of degree at most $d$ and height at most $b$, and $0 < \epsilon < 1$}
+\KwOut{$n$ zero-dimensional parameterizations, the union of whose zeros
+  includes at least one point in each connected component of $V(f)\cap \R^n$, with probability of success at least $1-\epsilon$. } 
+
+\nl Construct $S := \{1,2,\hdots,\lceil 3\epsilon^{-1}5n^3(2d)^{2n} \rceil\}$ and $T :=
+\{1,2,\hdots,\lceil 3\epsilon^{-1}nd^{2n}\rceil\},$ and randomly choose $\mA \in
+S^{n^2}$, and $\bm \sigma \in T^{n-1}$\; 
+%
+%
+\caption{{HypersurfaceCase} \label{}} 
+%
+\nl \For{$i\gets1$ \KwTo $n$}{
+ \nl Build a straight-line program $\Gamma_i$ that computes the 
+ equations
+  $\left\{X_1-\sigma_1,\hdots,X_{i-1}-\sigma_{i-1},f^{\mA},\frac{\pa
+    f^{\mA}}{\pa X_{i+1}},\hdots,\frac{\pa f^{\mA}}{\pa X_n} \right\}$\;
+ 
+  \nl Run \cite[Algorithm 2]{SH} $k \geq \lg(3n/\epsilon)$ times
+  with input $\Gamma_i$\;
+
+  \nl Let $\mathscr{Q}_i$ be the highest cardinality
+  zero-dimensional parameterization returned in step 4 \; 
+} 
+\nl  \Return $[\mathscr{Q}_1,\hdots,\mathscr{Q}_n]$.
+\end{algorithm}
+
+If $f^\mA$ satisfies ${\bf H}_i$, and $f^\mA$ and
+$(\sigma_1,\dots,\sigma_{i-1})$ satisfy ${\bf H}'_i$ for all $i$, then
+Theorem~2 in~\cite{EMP} establishes correctness.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Bit operation cost}
+The following lists the costs for each step of Algorithm 1:
+\begin{enumerate}
+    \item \skipitems{1} We defined $S := \{1,2,\hdots,\lceil 3\epsilon^{-1}5n^3(2d)^{2n} \rceil \}$
+      and therefore the height of any $a_{i,j} \in S$ is at most
+    \[
+    \log 3/{\epsilon} + \log(5n^3(2d)^{2n}) \in O^{\sim}(\log 1/{\epsilon} + n\log d).
+    \]
+    Since $|T| < |S|,$ the height of any $\sigma_{j} \in T$ is at most the same.
+    \item 
+    After computing the partial derivatives, the height grows by at
+    most another factor of $\log d$. Thus, all polynomials in the
+    system considered at Step 3 have height $ O^{\sim}(b + d\log 1 /
+    \epsilon + dn)$. All integer coefficients appearing in $\Gamma_i$ 
+    satisfy the same bound.    
+    %% Furthermore, preparing the
+    %% straight line program for the gradient of $f$ does not introduce
+    %% large integers. The integers in $\grad (f)$ are of the same
+    %% magnitude as in $\Gamma$.
+    \item As a result, after applying \cite[Algorithm 2]{SH} $k$ times
+      for each index $i$, with $k = O(\log n + \log 1 / \epsilon)$,
+      the total boolean cost of the algorithm is
+      \[
+      O^{\sim}(d^{3n+1}(\log1/\epsilon)(b + \log1/\epsilon))
+      \]
+      where the polynomials in the output have degree at most $d^n,$ and height at most
+      \[
+      O^{\sim}(d^{n+1}(b + \log 1 / \epsilon)).
+  \]
+\end{enumerate}
+\noindent 
+This proves the runtime estimate, as well as our bounds on the height
+of the output.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Probability of success}
+Let $\Delta_i \in \C[\A]$ be the polynomials from
+Theorem~\ref{theo:gen}. Denote by $\Delta := \prod_{i=1}^n \D_i,$ and
+note that
+\begin{align}
+    \deg \Delta \leq \sum_{i=1}^n \deg \Delta_i \leq 5n^3(2d)^{2n}.
+\end{align}
+If $\mA \in \C^{n \times n}$ does not cancel $\Delta,$ then $\mA$ is
+invertible and $f^\mA$ satisfies $\textbf{H}_i$ for all $i \in
+\{1,\hdots,n\}.$ Now, assuming that $\mA$ is such a matrix, let
+$\Xi_{i} \in \C[S_1,\dots,S_{i-1}]$ be the polynomials from Theorem 2.2 applied to
+$f^{\mA}.$ Denote by $\Xi := \prod_{i=1}^n \Xi_i,$ and note that
+\begin{align}
+    \deg \Xi \leq \sum_{i=1}^n \deg \Xi_i \leq nd^{2n}.
+\end{align}
+If $\bm \sigma \in \C^{i-1}$ does not cancel $\Xi$, then $f^{\mA}$ and
+$\bm \sigma$ satisfy $\textbf{H}_i^{'}$ for all $i\in\{1,\hdots,n\}.$ As we argued above, the algorithm is guaranteed to
+succeed, as long as our call to Algorithm 2 in~\cite{SH} succeeds. That latter reference establishes that by repeating the calculation $k$ times, and keeping the output of highest degree among those $k$ results, we succeed with probability at least $1-(1/2)^k$. When Algorithm 2 does not succeed, it either returns a proper subset of the solutions, or FAIL. Note that Algorithm 2 is shown to succeed in a single run with  probability at least $1-11/32,$ and we bound the probability of success with $1-1/2$ for simplicity. 
+Now, by construction of
+\[
+S := \{1,2,\hdots,\lceil 3\epsilon^{-1}5n^3(2d)^{2n}\rceil \}
+\] 
+and 
+\[
+T := \{1,2,\hdots,\lceil 3\epsilon^{-1}nd^{2n} \rceil \},
+\] 
+where $\mA \in S^{n^2}$ and  $\bm \sigma \in T^{n-1}$ are randomly chosen, we have 
+%
+\[
+\pr[\Delta(\mA)=0] \leq  \frac{\deg\Delta}{|S|} = \epsilon/3
+\]
+and
+\[
+\pr[\Xi(\bm \sigma)=0] \leq  \frac{\deg\Xi}{|T|} = \epsilon/3.
+\]
+Let $\mathscr{E}$ be the event that the parameterizations
+$[\mathscr{Q}_1,\hdots,\mathscr{Q}_n]$ returned in step 6 of
+Algorithm~1 are correct. Then, the probability of success is equal to
+\begin{align*}
+ \pr[\Delta(\mA)\ne 0] \times \pr[\Xi(\bm \sigma)\ne 0 ~|~\Delta(\mA) \ne 0] \times \pr[\mathscr{E}~|~
+   \Delta(\mA)\Xi(\bm\sigma) \ne 0].
+\end{align*}
+Set $k = \lg(3n/\epsilon)$ so that 
+\[
+(1-2^{-k})^n = (1 - \epsilon/(3n))^n \geq 1 - \epsilon/3,
+\]
+by Bernoulli's inequality. Therefore, 
+\begin{align*}
+\pr[\textrm{success}] &\geq (1- \epsilon/3)(1-
+\epsilon/3)\pr[\mathscr{E}~|~   \Delta(\mA)\Xi(\bm\sigma) \ne 0]\\ 
+& \geq (1- \epsilon/3)(1-
+\epsilon/3)(1-2^{-k})^n \\ & \geq (1- \epsilon/3)(1- \epsilon/3)(1-
+\epsilon/3)\\ & \geq 1 - \epsilon.
+\end{align*}
+This finishes the proof of theorem \ref{theo:mainH}.
+
+
+
+
+
+%----------------------------------------------------------------------
+\section{The general case}
+%----------------------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{Pseudocode}
+This subroutine also requires that the input system be given by a
+straight-line program. We build it (at Step 3) in the straightforward
+manner already suggested in the introduction: given $F=(f_1,\hdots,f_p)$ in $\C[X_1,\hdots,X_n]$, we can build
+a straight-line program that evaluates each $f_i$ in $O(d^n)$ operations, by
+computing all monomials of degree up to $d$, multiplying them by the
+corresponding coefficients in $f_i$, and adding results. To obtain a
+straight-line program for $f_i^\mA$, we add $O(n^2)$ steps corresponding
+to the application of the change of variables $\mA$. The number of operations here is thus
+\[
+O(nd^n + n^3) = O^{\sim}(d^n).
+\]
+From this, we can compute and evaluate the required partial derivatives in the Jacobian of $F^\mA$ in
+\[
+O(n^2d^n) = O^{\sim}(d^n)
+\]
+operations ~\cite{BaSt83}.
+Then, the matrix vector product with the vector of Lagrange multipliers adds a cost that is polynomial in $n$, and which we can therefore neglect in the soft oh notation. Finally, we add the linear equations
+$X_1-\sigma_1,\hdots,X_{i-1}-\sigma_{i-1}$; this gives $\Gamma_i$, and the total cost for computing the straight line program is $O^{\sim}(d^n).$
+%\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ALGORITHM %
+    %%%%%%%%%%%%%%%%%
+    \begin{algorithm}[!h]
+    \KwIn{$F=(f_1,\hdots,f_p) \in \ZZ[X_1,\hdots,X_n]^p$ with $\deg(f_i) \leq d$ and $\htt(f_i) \leq b$, and $0 < \epsilon < 1$}
+    \KwOut{$n$ zero-dimensional parameterizations, the union of whose zeros
+    includes at least one point in each connected component of $V(F) \cap \R^n$, with probability at least $1-\epsilon$} 
+
+    \nl Construct $S := \{1,2,\hdots,\lceil 4\epsilon^{-1}6n^3(2d)^{5n} \rceil\}$ and $T :=
+    \{1,2,\hdots,\lceil 4\epsilon^{-1}nd^{5n} \rceil \},$ and 
+    $R :=
+    \{1,2,\hdots,\lceil 4\epsilon^{-1}\td \rceil \}$
+    and randomly choose $\mA \in
+    S^{n^2}, \bm \sigma \in T^{n-1},$ and $\ub \in R^p$\; 
+
+    \caption{{GeneralCase} \label{alg:1}} 
+
+    \nl \For{$i\gets1$ \KwTo $n$}{
+    \nl Build a straight-line program $\Gamma_i$ that computes the equations
+    \[
+    \left\{X_1-\sigma_1,\hdots,X_{i-1}-\sigma_{i-1},f_1^{\mA},\hdots,f_p^{\mA}, \sLA_1,\hdots,\sLA_{n-i},\sum_{i=1}^{c}u_iL_i-1 \right\}\;
+    \]
+    \nl Run \cite[Algorithm 2]{SH} $k \geq \lg(3n/\epsilon)$ times
+    with input $\Gamma_i$\;
+
+    \nl Let $\mathscr{Q}_i$ be the highest cardinality
+    zero-dimensional parameterization returned in step 4\; 
+    
+    \nl  Compute a parameterization of the projection of $\mathscr{Q}_i$ onto the $\Xb$-space, and let $\mathscr{Q}^{'}_i$ denote this new parameterization \; 
+    
+    } 
+    \nl  \Return $[\mathscr{Q}^{'}_1,\hdots,\mathscr{Q}^{'}_{n}]$.
+    \end{algorithm}
+    %%%%% ALGORITHM %
+    %%%%%%%%%%%%%%%%%
+    
+
+
+
+
+
+
+
+
+
+
+
+
+\noindent 
+If $F^\mA$ satisfies ${\bf G}_i$, $F^\mA$ and
+$\bm\sigma$ satisfy ${\bf G}'_i$ and $\ub$ satisfies $\bm H_i^{''}$ for all $i$, then
+Theorem~2 in~\cite{EMP} establishes correctness.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Bit operation cost} 
+%
+The following lists the costs for each step of Algorithm \ref{alg:1}:
+
+\noindent
+    (1) We defined $S := \{1,2,\hdots,\lceil 3\epsilon^{-1}6n^3(2d)^{5n} \rceil \}$
+      and therefore the height of any $a_{i,j} \in S$ is at most
+    \[
+    \log 3/{\epsilon} + \log(6n^3(2d)^{5n}) \in O^{\sim}(\log 1/{\epsilon} + n\log d).
+    \]
+Since $|T| < |S|,$ we also have that the height of any $b_{i,j} \in T$ is at most the same.
+\newline 
+\noindent  
+    (3)
+    After computing the partial derivatives in the Jacobian matrix, the height grows by at
+    most another factor of $\log d$. Thus, all polynomials in the
+    system considered at Step 3 have height 
+    \[
+    O^{\sim}(b + d(\log 1 /
+    \epsilon + n\log d))
+    =
+        O^{\sim}(b + d\log 1 /
+    \epsilon + dn).
+    \]
+    All integer coefficients appearing in $\Gamma_i$ 
+    satisfy the same bound.    
+    %% Furthermore, preparing the
+    %% straight line program for the gradient of $f$ does not introduce
+    %% large integers. The integers in $\grad (f)$ are of the same
+    %% magnitude as in $\Gamma$.
+     
+\noindent  
+    (4)   
+    As a result, after applying \cite[Algorithm 2]{SH} $k$ times
+      for each index $i$, with $k = O(\log n + \log 1 / \epsilon)$,
+      the total boolean cost of the algorithm is
+  \[
+O^{\sim}(d^{3n+2p+1}(\log1/\epsilon)(b + \log1/\epsilon))
+  \]
+      where the polynomials in the output have degree at most $d^{n+p},$ and height at most
+  \[
+O^{\sim}(d^{n+p+1}(b + \log1/\epsilon)).
+  \]
+\noindent
+This proves the runtime estimate, as well as our bounds on the height
+of the output.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Probability of success} 
+Let $\Delta_i \in \C[\A]$ be the polynomials from
+Theorem~\ref{theo:gen}. Denote by $\Delta := \prod_{i=1}^n \D_i,$ and
+note that
+\begin{align}
+    \deg \Delta \leq \sum_{i=1}^{n-p+1} \deg \Delta_i \leq 6n^3(2d)^{5n}.
+\end{align}
+If $\mA \in \C^{n \times n}$ does not cancel $\Delta,$ then $\mA$ is
+invertible and $F^\mA$ satisfies $\textbf{G}_i$ for all $i$ in
+$\{1,\hdots,n-p+1\}.$ Now, assuming that $\mA$ is such a matrix, let
+$\Xi_i\in \C[S_1,\dots,S_{p+i-1}]$ be the polynomials from Theorem \ref{theo:Hp} applied to
+$F^{\mA}.$ Denote by $\Xi := \prod_{i=1}^n \Xi_i,$ and note that
+\begin{align}
+    \deg \Xi \leq \sum_{i=1}^{n-p+1} \deg \Xi_i \leq nd^{5n}.
+\end{align}
+And Denote by $\Upsilon := \prod_{i=1}^n \Upsilon_i,$ and
+note that
+\begin{align}
+    \deg \Upsilon \leq \sum_{i=1}^{n-p+1} \deg \Upsilon_i \leq \td.
+\end{align}
+If $\bm \sigma \in \C^{i-1}$ does not cancel $\Xi$, then $F^{\mA}$ and
+$\bm \sigma$ satisfy $\textbf{G}_i^{'}$ for all $i \in
+\{1,\hdots,n-p+1\};$ as we argued above, the algorithm is guaranteed to
+succeed, as long as our call to Algorithm 2 in~\cite{SH} succeeds. 
+Now, by construction of
+\[
+S := \{1,2,\hdots,\lceil 4\epsilon^{-1}6n^3(2d)^{5n}\rceil \},
+\] 
+\[
+T := \{1,2,\hdots,\lceil 4\epsilon^{-1}nd^{5n} \rceil \},
+\] 
+and 
+\[
+R := \{1,2,\hdots,\lceil 4\epsilon^{-1}\td \rceil \},
+\]
+where $\mA \in S^{n^2}, \sigma \in T^{n-1}$ and $\ub \in R^{p}$ are randomly chosen, we have 
+%
+\[
+\pr[\Delta(\mA)=0] \leq  \frac{\deg\Delta}{|S|} = \epsilon/4,
+\]
+\[
+\pr[\Xi(\bm \sigma,\ub)=0] \leq  \frac{\deg\Xi}{|T|} = \epsilon/4
+\]
+and
+\[
+\pr[\Upsilon(\ub)=0] \leq  \frac{\deg\Upsilon}{|R|} = \epsilon/4
+\]
+Let $\mathscr{E}$ be the event that the parameterizations
+$[\mathscr{Q}_1^{'},\hdots,\mathscr{Q}_n^{'}]$ returned in step 7 of
+Algorithm \ref{alg:1} are correct. Then, the probability of success is equal to
+\begin{align*}
+ \pr[\Delta(\mA)\ne 0] \times \pr[\Xi(\bm \sigma)\ne 0 ~|~\Delta(\mA) \ne 0] \times \pr[\Upsilon(\ub)\ne 0 ~|~\Delta(\mA)\Xi(\bm \sigma) \ne 0] \times \pr[\mathscr{E}~|~
+   \Delta(\mA)\Xi(\bm \sigma)\Upsilon(\ub) \ne 0].
+\end{align*}
+Set $k = \lg(4n/\epsilon)$ so that 
+\[
+(1-2^{-k})^n = (1 - \epsilon/(3n))^n \geq 1 - \epsilon/4,
+\]
+by Bernoulli's inequality. Therefore, 
+\begin{align*}
+\pr[\textrm{success}] &\geq (1- \epsilon/4)(1- \epsilon/4)(1-
+\epsilon/4) \pr[\mathscr{E}~|~
+   \Delta(\mA)\Xi(\bm \sigma)\Upsilon(\ub) \ne 0]\\ 
+& \geq (1- \epsilon/4)(1- \epsilon/4)(1-
+\epsilon/4)(1-2^{-k})^n \\ & \geq (1- \epsilon/4)(1- \epsilon/4)(1- \epsilon/4)(1-
+\epsilon/4)\\ & \geq 1 - \epsilon.
+\end{align*}
+This finishes the proof of theorem \ref{theo:mainG}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+%======================================================================
+\chapter{Conclusions}
+%======================================================================
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Contributions}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Further Work}
+This work should also be seen as a step toward the analysis of
+further randomized algorithms in real algebraic geometry.  In particular, randomized algorithms for deciding {\em
+  connectivity queries} on smooth, compact algebraic sets have been
+developed in a series of papers
+\cite{SchostMohabBabySteps2011,SchostMohabBabySteps2014}, and could be
+revisited using the techniques introduced here. The techniques would apply to algorithms in real algebraic geometry where transversality or Noether position are required geometric properties established by a random change of coordinates. 
+
+
+%----------------------------------------------------------------------
+% END MATERIAL
+%----------------------------------------------------------------------
+
+% B I B L I O G R A P H Y
+% -----------------------
+
+% The following statement selects the style to use for references.  It controls the sort order of the entries in the bibliography and also the formatting for the in-text labels.
+\bibliographystyle{plain}
+% This specifies the location of the file containing the bibliographic information.  
+% It assumes you're using BibTeX (if not, why not?).
+\cleardoublepage % This is needed if the book class is used, to place the anchor in the correct page,
+                 % because the bibliography will start on its own page.
+                 % Use \clearpage instead if the document class uses the "oneside" argument
+\phantomsection  % With hyperref package, enables hyperlinking from the table of contents to bibliography             
+% The following statement causes the title "References" to be used for the bibliography section:
+\renewcommand*{\bibname}{References}
+
+% Add the References to the Table of Contents
+\addcontentsline{toc}{chapter}{\textbf{References}}
+
+\bibliography{uw-ethesis}
+% Tip 5: You can create multiple .bib files to organize your references. 
+% Just list them all in the \bibliogaphy command, separated by commas (no spaces).
+
+% The following statement causes the specified references to be added to the bibliography% even if they were not 
+% cited in the text. The asterisk is a wildcard that causes all entries in the bibliographic database to be included (optional).
+\nocite{*}
+
+% The \appendix statement indicates the beginning of the appendices.
+%\appendix
+% Add a title page before the appendices and a line in the Table of Contents
+%\chapter*{APPENDICES}
+%\addcontentsline{toc}{chapter}{APPENDICES}
+%======================================================================
+%\chapter[]{}
+%\label{AppendixA}
+% Tip 4: Example of how to get a shorter chapter title for the Table of Contents 
+%======================================================================
+%\section{}
+
+\end{document}
